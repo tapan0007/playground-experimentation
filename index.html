@@ -28,28 +28,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="/" class="navbar-brand">PyPy.js</a>
-      </div>
-      <div class="collapse navbar-collapse bs-navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="index.html">Overview</a></li>
-          <li><a href="editor.html">Editor</a></li>
-          <li><a href="https://github.com/pypyjs/pypyjs/releases/">Download</a></li>
-          <li><a href="https://github.com/pypyjs/pypyjs">Source</a></li>
-          <li><a href="http://github.com/pypyjs/pypyjs/issues">Bugs</a></li>
-          <li><a href="http://arewepythonyet.com/">Benchmarks</a></li>
-        </ul>
+        <a href="/" class="navbar-brand">islpy online editor</a>
       </div>
     </div>
   </div>
 
   <div class='container'>
-
-    <p>PyPy.js is an experiment in building a fast and compliant python environment for the web.</p>
-
-    <p>It uses the <a href="http://pypy.org/">PyPy</a> python interpreter, compiled for the web via <a href="http://emscripten.org">emscripten</a>, with a custom JIT backend that emits <a href="http://asmjs.org">asm.js</a> code at runtime.</p>
-
-    <p>Try it out below, or see the links above for benchmarks and download information.</p>
 
     <p>&nbsp;</p>
 
@@ -76,13 +60,13 @@
         jqconsole.Write(data, 'jqconsole-output');
       }
       // Display a helpful message and twiddle thumbs as it loads.
-      vm.stdout("Loading PyPy.js.\n\n");
+      vm.stdout("Loading PyPy.js and islpy.\n\n");
       vm.stdout('It\'s big, so this might take a while...');
       var pseudo_status = setInterval(function(){ vm.stdout("."); }, 500);
       vm.ready.then(function() {
         clearInterval(pseudo_status);
         jqconsole.Reset();
-        vm.stdout('Welcome to PyPy.js!\n')
+        vm.stdout('welcome to islpy python console!\n')
         // REPL forever via jqconsole prompt.
         return vm.repl(function(ps1) {
           jqconsole.SetPromptLabel(ps1);
