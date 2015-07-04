@@ -67,7 +67,17 @@
       vm.ready.then(function() {
         clearInterval(pseudo_status);
         jqconsole.Reset();
-        vm.stdout('welcome to islpy python console!\n')
+        vm.stdout('Polyhedral playground - islpy in the browser!\n\n')
+        vm.stdout('Try:\n')
+        vm.stdout('> s1 = Set.from_str("{[10]}")\n')
+        vm.stdout('> s2 = Set.from_str("{[i]: 0 < i < 5}")\n')
+        vm.stdout('> s3 = s1.union(s2);\n')
+        vm.stdout('> s1\n')
+        vm.stdout('{ [10] }\n')
+        vm.stdout('> s2\n')
+        vm.stdout('{ [i]: i <= 4 and i >= 1 }\n')
+        vm.stdout('> s3\n')
+        vm.stdout('{ [i]: i <= 4 and i >= 1; [10] }\n\n')
 str = "import js                                                                        \n" +
 "ctx = js.globals.Module._isl_ctx_alloc()                                         \n" +
 "class Set:                                                                       \n" +
@@ -97,10 +107,6 @@ str = "import js                                                                
 "     return Set(ptr)          \n";
 	console.log(str)
         vm.exec(str);
-/*
-"print('Loaded')";*/
-        vm.stdout('welcome to islpy python console!\n')
-
         // REPL forever via jqconsole prompt.
         return vm.repl(function(ps1) {
           jqconsole.SetPromptLabel(ps1);
