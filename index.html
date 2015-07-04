@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>PyPy.js</title>
+  <title>Polyhedral Playground</title>
 
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
@@ -16,6 +16,7 @@
   <link href='css/ansi.css' rel='stylesheet' type='text/css'>
   <link href='css/console.css' rel='stylesheet' type='text/css'>
   <link href='css/pypyjs.css' rel='stylesheet' type='text/css'>
+  <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="/" class="navbar-brand">islpy online editor</a>
+        <a href="/" class="navbar-brand">Polyhedral Playground</a>
       </div>
     </div>
   </div>
@@ -67,6 +68,39 @@
         clearInterval(pseudo_status);
         jqconsole.Reset();
         vm.stdout('welcome to islpy python console!\n')
+str = "import js                                                                        \n" +
+"ctx = js.globals.Module._isl_ctx_alloc()                                         \n" +
+"class Set:                                                                       \n" +
+"  def __init__(self, ptr):                                                       \n" +
+"    self.ptr = ptr                                                               \n" +
+"  @staticmethod                                                                  \n" +
+"  def from_str(string):                                                          \n" +
+"    retType = 'number'                                                           \n" +
+"    argTypes = ['number', 'string']                                              \n" +
+"    args = [ctx, string]                                                         \n" +
+"    ptr = js.globals.Module.ccall('isl_set_read_from_str', retType, argTypes, args)\n" +
+"    return Set(ptr)                                                              \n" +
+"  def __repr__(self):                                                            \n" +
+"    p = js.globals.Module._isl_printer_to_str(ctx)                               \n" +
+"    p = js.globals.Module._isl_printer_print_set(p, self.ptr)                    \n" +
+"    string = js.globals.Module.ccall('isl_printer_get_str', 'string', ['number'], [p])\n" +
+"    return str(string)                                                           \n" +
+"  def intersect(self, set2):                                                     \n" +
+"     ptr1 = js.globals.Module._isl_set_copy(self.ptr)                            \n" +
+"     ptr2 = js.globals.Module._isl_set_copy(set2.ptr)                            \n" +
+"     ptr = js.globals.Module._isl_set_intersect(ptr1, ptr2)                      \n" +
+"     return Set(ptr)                                                             \n" +
+"  def union(self, set2):                                                         \n" +
+"     ptr1 = js.globals.Module._isl_set_copy(self.ptr)                            \n" +
+"     ptr2 = js.globals.Module._isl_set_copy(set2.ptr)                            \n" +
+"     ptr = js.globals.Module._isl_set_union(ptr1, ptr2)                          \n" +
+"     return Set(ptr)          \n";
+	console.log(str)
+        vm.exec(str);
+/*
+"print('Loaded')";*/
+        vm.stdout('welcome to islpy python console!\n')
+
         // REPL forever via jqconsole prompt.
         return vm.repl(function(ps1) {
           jqconsole.SetPromptLabel(ps1);
