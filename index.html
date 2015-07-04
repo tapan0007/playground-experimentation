@@ -69,15 +69,10 @@
         jqconsole.Reset();
         vm.stdout('Polyhedral playground - islpy in the browser!\n\n')
         vm.stdout('Try:\n')
-        vm.stdout('> s1 = Set.from_str("{[10]}")\n')
-        vm.stdout('> s2 = Set.from_str("{[i]: 0 < i < 5}")\n')
-        vm.stdout('> s3 = s1.union(s2);\n')
-        vm.stdout('> s1\n')
-        vm.stdout('{ [10] }\n')
-        vm.stdout('> s2\n')
-        vm.stdout('{ [i]: i <= 4 and i >= 1 }\n')
-        vm.stdout('> s3\n')
-        vm.stdout('{ [i]: i <= 4 and i >= 1; [10] }\n\n')
+        vm.stdout('s1 = Set.from_str("{[10]}")\n')
+        vm.stdout('s2 = Set.from_str("{[i]: 0 < i < 5}")\n')
+        vm.stdout('s3 = s1.union(s2);\n')
+        vm.stdout('s1;s2;s3\n')
 str = "import js                                                                        \n" +
 "ctx = js.globals.Module._isl_ctx_alloc()                                         \n" +
 "class Set:                                                                       \n" +
