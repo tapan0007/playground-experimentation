@@ -44,16 +44,19 @@
 
 <div class='container'>
     <div class="row">
-        <textarea id="editor">print "isl demo"
+        <textarea id="editor">print("Welcome to isl python!")
+print("")
 
-s1 = set("{[i]: 0 < i < 10}")
-s2 = set("{[i]: 5 < i < 15}")
+S1 = set("{[i]: 0 < i < 10}")
+S2 = set("{[i]: 5 < i < 15}")
 
-union = s1.union(s2).coalesce()
-difference = s1.subtract(s2)
+Union = S1.union(S2).coalesce()
+Difference = S1.subtract(S2)
 
-print("The union of %s and %s is %s" % (s1, s2, union))
-print("The difference of %s and %s is %s" % (s1, s2, difference))
+print("S1: %s" % S1)
+print("S2: %s" % S2)
+print("S1 + S2: %s" % Union)
+print("S1 - S2: %s" % (Difference))
         </textarea>
     </div>
     <div class="row">

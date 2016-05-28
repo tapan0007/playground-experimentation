@@ -110,7 +110,7 @@ $(function () {
     jqconsole.Write('It\'s big, so this might take a while...', 'jqconsole-output');
 
     verbose_exec(
-        'print "isl demo";s1 = set("{[i]: 0 < i < 10}");s2 = set("{[i]: 5 < i < 15}");union = s1.union(s2).coalesce();difference = s1.subtract(s2);print("The union of %s and %s is %s" % (s1, s2, union));print("The difference of %s and %s is %s" % (s1, s2, difference))'
+        'print("Welcome to isl python!");print("");s1 = set("{[i]: 0 < i < 10}");s2 = set("{[i]: 5 < i < 15}");union = s1.union(s2).coalesce();difference = s1.subtract(s2);print("S1: %s" % s1); print("S2: %s" % s2); print("S1 + S2: %s" % union); print("S1 - S2: %s" % (difference));',
         init_run=true
     );
 });
