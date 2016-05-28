@@ -48,17 +48,16 @@
 
 <div class='container'>
     <div class="row">
-        <textarea id="editor">print "Hello PyPy-JS!"
-print
+        <textarea id="editor">print "isl demo"
 
-for i in range(50):
-    print i,
+s1 = set("{[i]: 0 < i < 10}")
+s2 = set("{[i]: 5 < i < 15}")
 
-print "\n"
+union = s1.union(s2)
+difference = s1.subtract(s2)
 
-import sys
-print "sys.version:", sys.version
-print "sys.platform:", sys.platform
+print("The union of %s and %s is %s" % (s1, s2, union))
+print("The difference of %s and %s is %s" % (s1, s2, difference))
         </textarea>
     </div>
     <div class="row">
