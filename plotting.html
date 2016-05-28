@@ -1,0 +1,156 @@
+<html lang='en'>
+
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PyPy.js - editor</title>
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+  <link href='https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+  <link href='css/ansi.css' rel='stylesheet' type='text/css'>
+  <link href='css/console.css' rel='stylesheet' type='text/css'>
+  <link href='css/pypyjs.css' rel='stylesheet' type='text/css'>
+  <link href='css/codemirror/codemirror.css' rel='stylesheet' type='text/css'>
+      <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+  <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+  <link href='css/editor.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" id="logo" href="http://www.pollylabs.org">
+<img src="/images/logo.png" width="80" style="margin-right:10px">
+	</a>
+        <a href="./" class="navbar-brand">polyhedral playground</a>
+      </div>
+      <div class="collapse navbar-collapse bs-navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="index.html">Console</a></li>
+          <li class="active"><a href="editor.html">Editor</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+<div class='container'>
+    <div class="row">
+        <textarea id="editor">print("Polly Labs presents isl python!")
+import js
+text = """
+    <div id="da" style="background: white; width: 500px"></div>
+	<script>
+		/* implementation heavily influenced by http://bl.ocks.org/1166403 */
+		
+		// define dimensions of graph
+		var m = [80, 80, 80, 80]; // margins
+		var w = 500 - m[1] - m[3]; // width
+		var h = 400 - m[0] - m[2]; // height
+		
+		// create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
+		var data = [3, 6, 2, 7, 5, 2, 0, 3, 8]
+
+		// X scale will fit all values from data[] within pixels 0-w
+		var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
+		// Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
+		var y = d3.scale.linear().domain([0, 10]).range([h, 0]);
+			// automatically determining max range can work something like this
+			// var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
+
+		// create a line function that can convert data[] into x and y points
+		var line = d3.svg.line()
+			// assign the X function to plot our line as we wish
+			.x(function(d,i) { 
+				// verbose logging to show what's actually being done
+				console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
+				// return the X coordinate where we want to plot this datapoint
+				return x(i); 
+			})
+			.y(function(d) { 
+				// verbose logging to show what's actually being done
+				console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
+				// return the Y coordinate where we want to plot this datapoint
+				return y(d); 
+			})
+
+			// Add an SVG element with the desired dimensions and margin.
+			var graph = d3.select("#da").append("svg:svg")
+			      .attr("width", w + m[1] + m[3])
+			      .attr("height", h + m[0] + m[2])
+			    .append("svg:g")
+			      .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
+			// create yAxis
+			var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true);
+			// Add the x-axis.
+			graph.append("svg:g")
+			      .attr("class", "x axis")
+			      .attr("transform", "translate(0," + h + ")")
+			      .call(xAxis);
+
+
+			// create left yAxis
+			var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
+			// Add the y-axis to the left
+			graph.append("svg:g")
+			      .attr("class", "y axis")
+			      .attr("transform", "translate(-25,0)")
+			      .call(yAxisLeft);
+			
+  			// Add the line by appending an svg:path element with the data line we created above
+			// do this AFTER the axes above so that the line is above the tick-lines
+  			graph.append("circle").attr("cx", "1").attr("cy", "1").attr("r", 10)
+				.style("fill", "purple")
+
+  			graph.append("polygon").attr("fill", "yellow").attr("points", "0,0 100,0 100,100 0,100 0,0;").attr("fill-opacity", 0.3)
+			
+
+	</script>
+"""
+js.globals.jqconsole.Write(text, "", 0)
+        </textarea>
+    </div>
+    <div class="row">
+        <h3 id="loading">loading...</h3>
+        <form id="actions" class="form-inline" action="">
+            <div class="form-group">
+                <button id="run" class="btn btn-default">run</button>
+                <label id="run_info"></label>
+            </div>
+            <div class="checkbox float_right">
+                <label><input type="checkbox" id="wrap_output" /> warp output</label>
+            </div>
+        </form>
+    </div>
+    <noscript><h3>Please enable JavaScript for using PyPy.js</h3></noscript>
+    <div id="console" class="row"></div>
+
+</div>
+  <script src="pypyjs-release/lib/Promise.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="pypyjs-release/lib/FunctionPromise.js" type="text/javascript" charset="utf-8"></script>
+  <script src="pypyjs-release/lib/pypy.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery-migrate-1.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jqconsole.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/codemirror/codemirror.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/codemirror/python.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/editor.js"></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+</body>
+
+</html>
