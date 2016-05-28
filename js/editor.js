@@ -66,6 +66,17 @@ function verbose_exec(code, init_run) {
 
         // console.log("Start code:" + JSON.stringify(code));
         var start_time = new Date();
+	var islpy = "";
+
+	$.ajax({
+    		url: 'isl.txt',
+		type: 'get',
+		async: false,
+		success: function(html) {
+			islpy = String(html);
+    		}
+	});
+ 	code = islpy + code
         vm.exec(code).then(function() {
             if (init_run!=true) { // don't overwrite "PyPy.js init in..." info
                 var duration = new Date() - start_time;
