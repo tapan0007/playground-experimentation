@@ -73,35 +73,21 @@
         vm.stdout('s2 = Set.from_str("{[i]: 0 < i < 5}")\n')
         vm.stdout('s3 = s1.union(s2);\n')
         vm.stdout('s1;s2;s3\n')
-str = "import js                                                                        \n" +
-"ctx = js.globals.Module._isl_ctx_alloc()                                         \n" +
-"class Set:                                                                       \n" +
-"  def __init__(self, ptr):                                                       \n" +
-"    self.ptr = ptr                                                               \n" +
-"  @staticmethod                                                                  \n" +
-"  def from_str(string):                                                          \n" +
-"    retType = 'number'                                                           \n" +
-"    argTypes = ['number', 'string']                                              \n" +
-"    args = [ctx, string]                                                         \n" +
-"    ptr = js.globals.Module.ccall('isl_set_read_from_str', retType, argTypes, args)\n" +
-"    return Set(ptr)                                                              \n" +
-"  def __repr__(self):                                                            \n" +
-"    p = js.globals.Module._isl_printer_to_str(ctx)                               \n" +
-"    p = js.globals.Module._isl_printer_print_set(p, self.ptr)                    \n" +
-"    string = js.globals.Module.ccall('isl_printer_get_str', 'string', ['number'], [p])\n" +
-"    return str(string)                                                           \n" +
-"  def intersect(self, set2):                                                     \n" +
-"     ptr1 = js.globals.Module._isl_set_copy(self.ptr)                            \n" +
-"     ptr2 = js.globals.Module._isl_set_copy(set2.ptr)                            \n" +
-"     ptr = js.globals.Module._isl_set_intersect(ptr1, ptr2)                      \n" +
-"     return Set(ptr)                                                             \n" +
-"  def union(self, set2):                                                         \n" +
-"     ptr1 = js.globals.Module._isl_set_copy(self.ptr)                            \n" +
-"     ptr2 = js.globals.Module._isl_set_copy(set2.ptr)                            \n" +
-"     ptr = js.globals.Module._isl_set_union(ptr1, ptr2)                          \n" +
-"     return Set(ptr)          \n";
-	console.log(str)
-        vm.exec(str);
+
+	var islpy = "";
+
+	$.ajax({
+    		url: 'isl.py',
+		type: 'get',
+		async: false,
+		success: function(html) {
+			islpy = String(html);
+    		}
+	});
+
+	console.log(islpy)
+	vm.exec(islpy);
+
         // REPL forever via jqconsole prompt.
         return vm.repl(function(ps1) {
           jqconsole.SetPromptLabel(ps1);
