@@ -82,10 +82,10 @@ href="http://pypyjs.org">PyPy.js</a>.
         jqconsole.Reset();
         vm.stdout('Polly Labs presents isl python in the browser!\n\n')
         vm.stdout('Try:\n')
-        vm.stdout('s1 = set("{[10]}")\n')
-        vm.stdout('s2 = set("{[i]: 0 < i < 5}")\n')
-        vm.stdout('s3 = s1.union(s2);\n')
-        vm.stdout('s1;s2;s3\n')
+        vm.stdout('domain = Set("{[i,j]: 0 < i, j < 100}")\n')
+        vm.stdout('schedule = Map("{[i, j] -> [floor(i/8), floor(j/8), i, j]}")\n')
+        vm.stdout('schedule = schedule.intersect_domain(domain)\n')
+        vm.stdout('AstBuild().node_from_schedule_map(schedule)\n')
 
 	var islpy = "";
 

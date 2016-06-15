@@ -33,7 +33,7 @@ class isl:
     def __init__(self):
 	self.foo = True
 
-class union_pw_multi_aff:
+class UnionPwMultiAff:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -43,11 +43,11 @@ class union_pw_multi_aff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_pw_multi_aff_read_from_str(self.ctx, args[0])
             return
-        if len(args) == 1 and args[0].__class__ is union_pw_aff:
+        if len(args) == 1 and args[0].__class__ is UnionPwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_pw_multi_aff_from_union_pw_aff(isl.isl_union_pw_aff_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is pw_multi_aff:
+        if len(args) == 1 and args[0].__class__ is PwMultiAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_pw_multi_aff_from_pw_multi_aff(isl.isl_pw_multi_aff_copy(args[0].ptr))
             return
@@ -60,55 +60,55 @@ class union_pw_multi_aff:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_pw_multi_aff("""%s""")' % s
+            return 'isl.UnionPwMultiAff("""%s""")' % s
         else:
-            return 'isl.union_pw_multi_aff("%s")' % s
+            return 'isl.UnionPwMultiAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is union_pw_multi_aff:
-                arg0 = union_pw_multi_aff(arg0)
+            if not arg0.__class__ is UnionPwMultiAff:
+                arg0 = UnionPwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_pw_multi_aff:
-                arg1 = union_pw_multi_aff(arg1)
+            if not arg1.__class__ is UnionPwMultiAff:
+                arg1 = UnionPwMultiAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_pw_multi_aff_add(isl.isl_union_pw_multi_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-        return union_pw_multi_aff(ctx=ctx, ptr=res)
+        return UnionPwMultiAff(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is union_pw_multi_aff:
-                arg0 = union_pw_multi_aff(arg0)
+            if not arg0.__class__ is UnionPwMultiAff:
+                arg0 = UnionPwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_pw_multi_aff:
-                arg1 = union_pw_multi_aff(arg1)
+            if not arg1.__class__ is UnionPwMultiAff:
+                arg1 = UnionPwMultiAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_pw_multi_aff_flat_range_product(isl.isl_union_pw_multi_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-        return union_pw_multi_aff(ctx=ctx, ptr=res)
+        return UnionPwMultiAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is union_pw_multi_aff:
+        if arg1.__class__ is UnionPwMultiAff:
             res = isl.isl_union_pw_multi_aff_pullback_union_pw_multi_aff(isl.isl_union_pw_multi_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-            return union_pw_multi_aff(ctx=arg0.ctx, ptr=res)
+            return UnionPwMultiAff(ctx=arg0.ctx, ptr=res)
     def union_add(arg0, arg1):
         try:
-            if not arg0.__class__ is union_pw_multi_aff:
-                arg0 = union_pw_multi_aff(arg0)
+            if not arg0.__class__ is UnionPwMultiAff:
+                arg0 = UnionPwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_pw_multi_aff:
-                arg1 = union_pw_multi_aff(arg1)
+            if not arg1.__class__ is UnionPwMultiAff:
+                arg1 = UnionPwMultiAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_pw_multi_aff_union_add(isl.isl_union_pw_multi_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-        return union_pw_multi_aff(ctx=ctx, ptr=res)
+        return UnionPwMultiAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_pw_multi_aff_read_from_str(a_0, a_1):
@@ -181,17 +181,19 @@ def isl_union_pw_multi_aff_copy(a_0):
   return js.globals.Module.ccall('isl_union_pw_multi_aff_copy', retType, argTypes, args)
 isl.isl_union_pw_multi_aff_copy = isl_union_pw_multi_aff_copy
 
-class multi_union_pw_aff:
+union_pw_multi_aff = UnionPwMultiAff
+
+class MultiUnionPwAff:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is union_pw_aff:
+        if len(args) == 1 and args[0].__class__ is UnionPwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_union_pw_aff_from_union_pw_aff(isl.isl_union_pw_aff_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is multi_pw_aff:
+        if len(args) == 1 and args[0].__class__ is MultiPwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_union_pw_aff_from_multi_pw_aff(isl.isl_multi_pw_aff_copy(args[0].ptr))
             return
@@ -208,69 +210,69 @@ class multi_union_pw_aff:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.multi_union_pw_aff("""%s""")' % s
+            return 'isl.MultiUnionPwAff("""%s""")' % s
         else:
-            return 'isl.multi_union_pw_aff("%s")' % s
+            return 'isl.MultiUnionPwAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_union_pw_aff:
-                arg0 = multi_union_pw_aff(arg0)
+            if not arg0.__class__ is MultiUnionPwAff:
+                arg0 = MultiUnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_union_pw_aff:
-                arg1 = multi_union_pw_aff(arg1)
+            if not arg1.__class__ is MultiUnionPwAff:
+                arg1 = MultiUnionPwAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_union_pw_aff_add(isl.isl_multi_union_pw_aff_copy(arg0.ptr), isl.isl_multi_union_pw_aff_copy(arg1.ptr))
-        return multi_union_pw_aff(ctx=ctx, ptr=res)
+        return MultiUnionPwAff(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_union_pw_aff:
-                arg0 = multi_union_pw_aff(arg0)
+            if not arg0.__class__ is MultiUnionPwAff:
+                arg0 = MultiUnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_union_pw_aff:
-                arg1 = multi_union_pw_aff(arg1)
+            if not arg1.__class__ is MultiUnionPwAff:
+                arg1 = MultiUnionPwAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_union_pw_aff_flat_range_product(isl.isl_multi_union_pw_aff_copy(arg0.ptr), isl.isl_multi_union_pw_aff_copy(arg1.ptr))
-        return multi_union_pw_aff(ctx=ctx, ptr=res)
+        return MultiUnionPwAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is union_pw_multi_aff:
+        if arg1.__class__ is UnionPwMultiAff:
             res = isl.isl_multi_union_pw_aff_pullback_union_pw_multi_aff(isl.isl_multi_union_pw_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-            return multi_union_pw_aff(ctx=arg0.ctx, ptr=res)
+            return MultiUnionPwAff(ctx=arg0.ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_union_pw_aff:
-                arg0 = multi_union_pw_aff(arg0)
+            if not arg0.__class__ is MultiUnionPwAff:
+                arg0 = MultiUnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_union_pw_aff:
-                arg1 = multi_union_pw_aff(arg1)
+            if not arg1.__class__ is MultiUnionPwAff:
+                arg1 = MultiUnionPwAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_union_pw_aff_range_product(isl.isl_multi_union_pw_aff_copy(arg0.ptr), isl.isl_multi_union_pw_aff_copy(arg1.ptr))
-        return multi_union_pw_aff(ctx=ctx, ptr=res)
+        return MultiUnionPwAff(ctx=ctx, ptr=res)
     def union_add(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_union_pw_aff:
-                arg0 = multi_union_pw_aff(arg0)
+            if not arg0.__class__ is MultiUnionPwAff:
+                arg0 = MultiUnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_union_pw_aff:
-                arg1 = multi_union_pw_aff(arg1)
+            if not arg1.__class__ is MultiUnionPwAff:
+                arg1 = MultiUnionPwAff(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_union_pw_aff_union_add(isl.isl_multi_union_pw_aff_copy(arg0.ptr), isl.isl_multi_union_pw_aff_copy(arg1.ptr))
-        return multi_union_pw_aff(ctx=ctx, ptr=res)
+        return MultiUnionPwAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_multi_union_pw_aff_from_union_pw_aff(a_0):
@@ -350,13 +352,15 @@ def isl_multi_union_pw_aff_copy(a_0):
   return js.globals.Module.ccall('isl_multi_union_pw_aff_copy', retType, argTypes, args)
 isl.isl_multi_union_pw_aff_copy = isl_multi_union_pw_aff_copy
 
-class union_pw_aff(union_pw_multi_aff, multi_union_pw_aff):
+multi_union_pw_aff = MultiUnionPwAff
+
+class UnionPwAff(UnionPwMultiAff, MultiUnionPwAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is pw_aff:
+        if len(args) == 1 and args[0].__class__ is PwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_pw_aff_from_pw_aff(isl.isl_pw_aff_copy(args[0].ptr))
             return
@@ -373,41 +377,41 @@ class union_pw_aff(union_pw_multi_aff, multi_union_pw_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_pw_aff("""%s""")' % s
+            return 'isl.UnionPwAff("""%s""")' % s
         else:
-            return 'isl.union_pw_aff("%s")' % s
+            return 'isl.UnionPwAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is union_pw_aff:
-                arg0 = union_pw_aff(arg0)
+            if not arg0.__class__ is UnionPwAff:
+                arg0 = UnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_pw_aff:
-                arg1 = union_pw_aff(arg1)
+            if not arg1.__class__ is UnionPwAff:
+                arg1 = UnionPwAff(arg1)
         except:
-            return union_pw_multi_aff(arg0).add(arg1)
+            return UnionPwMultiAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_union_pw_aff_add(isl.isl_union_pw_aff_copy(arg0.ptr), isl.isl_union_pw_aff_copy(arg1.ptr))
-        return union_pw_aff(ctx=ctx, ptr=res)
+        return UnionPwAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is union_pw_multi_aff:
+        if arg1.__class__ is UnionPwMultiAff:
             res = isl.isl_union_pw_aff_pullback_union_pw_multi_aff(isl.isl_union_pw_aff_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-            return union_pw_aff(ctx=arg0.ctx, ptr=res)
+            return UnionPwAff(ctx=arg0.ctx, ptr=res)
     def union_add(arg0, arg1):
         try:
-            if not arg0.__class__ is union_pw_aff:
-                arg0 = union_pw_aff(arg0)
+            if not arg0.__class__ is UnionPwAff:
+                arg0 = UnionPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_pw_aff:
-                arg1 = union_pw_aff(arg1)
+            if not arg1.__class__ is UnionPwAff:
+                arg1 = UnionPwAff(arg1)
         except:
-            return union_pw_multi_aff(arg0).union_add(arg1)
+            return UnionPwMultiAff(arg0).union_add(arg1)
         ctx = arg0.ctx
         res = isl.isl_union_pw_aff_union_add(isl.isl_union_pw_aff_copy(arg0.ptr), isl.isl_union_pw_aff_copy(arg1.ptr))
-        return union_pw_aff(ctx=ctx, ptr=res)
+        return UnionPwAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_pw_aff_from_pw_aff(a_0):
@@ -466,21 +470,23 @@ def isl_union_pw_aff_copy(a_0):
   return js.globals.Module.ccall('isl_union_pw_aff_copy', retType, argTypes, args)
 isl.isl_union_pw_aff_copy = isl_union_pw_aff_copy
 
-class multi_pw_aff(multi_union_pw_aff):
+union_pw_aff = UnionPwAff
+
+class MultiPwAff(MultiUnionPwAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is multi_aff:
+        if len(args) == 1 and args[0].__class__ is MultiAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_pw_aff_from_multi_aff(isl.isl_multi_aff_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is pw_aff:
+        if len(args) == 1 and args[0].__class__ is PwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_pw_aff_from_pw_aff(isl.isl_pw_aff_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is pw_multi_aff:
+        if len(args) == 1 and args[0].__class__ is PwMultiAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_pw_aff_from_pw_multi_aff(isl.isl_pw_multi_aff_copy(args[0].ptr))
             return
@@ -497,75 +503,75 @@ class multi_pw_aff(multi_union_pw_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.multi_pw_aff("""%s""")' % s
+            return 'isl.MultiPwAff("""%s""")' % s
         else:
-            return 'isl.multi_pw_aff("%s")' % s
+            return 'isl.MultiPwAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_pw_aff:
-                arg0 = multi_pw_aff(arg0)
+            if not arg0.__class__ is MultiPwAff:
+                arg0 = MultiPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_pw_aff:
-                arg1 = multi_pw_aff(arg1)
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
         except:
-            return multi_union_pw_aff(arg0).add(arg1)
+            return MultiUnionPwAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_pw_aff_add(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-        return multi_pw_aff(ctx=ctx, ptr=res)
+        return MultiPwAff(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_pw_aff:
-                arg0 = multi_pw_aff(arg0)
+            if not arg0.__class__ is MultiPwAff:
+                arg0 = MultiPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_pw_aff:
-                arg1 = multi_pw_aff(arg1)
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
         except:
-            return multi_union_pw_aff(arg0).flat_range_product(arg1)
+            return MultiUnionPwAff(arg0).flat_range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_pw_aff_flat_range_product(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-        return multi_pw_aff(ctx=ctx, ptr=res)
+        return MultiPwAff(ctx=ctx, ptr=res)
     def product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_pw_aff:
-                arg0 = multi_pw_aff(arg0)
+            if not arg0.__class__ is MultiPwAff:
+                arg0 = MultiPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_pw_aff:
-                arg1 = multi_pw_aff(arg1)
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
         except:
-            return multi_union_pw_aff(arg0).product(arg1)
+            return MultiUnionPwAff(arg0).product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_pw_aff_product(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-        return multi_pw_aff(ctx=ctx, ptr=res)
+        return MultiPwAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is multi_aff:
+        if arg1.__class__ is MultiAff:
             res = isl.isl_multi_pw_aff_pullback_multi_aff(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-            return multi_pw_aff(ctx=arg0.ctx, ptr=res)
-        if arg1.__class__ is pw_multi_aff:
+            return MultiPwAff(ctx=arg0.ctx, ptr=res)
+        if arg1.__class__ is PwMultiAff:
             res = isl.isl_multi_pw_aff_pullback_pw_multi_aff(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-            return multi_pw_aff(ctx=arg0.ctx, ptr=res)
-        if arg1.__class__ is multi_pw_aff:
+            return MultiPwAff(ctx=arg0.ctx, ptr=res)
+        if arg1.__class__ is MultiPwAff:
             res = isl.isl_multi_pw_aff_pullback_multi_pw_aff(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-            return multi_pw_aff(ctx=arg0.ctx, ptr=res)
+            return MultiPwAff(ctx=arg0.ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_pw_aff:
-                arg0 = multi_pw_aff(arg0)
+            if not arg0.__class__ is MultiPwAff:
+                arg0 = MultiPwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_pw_aff:
-                arg1 = multi_pw_aff(arg1)
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
         except:
-            return multi_union_pw_aff(arg0).range_product(arg1)
+            return MultiUnionPwAff(arg0).range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_pw_aff_range_product(isl.isl_multi_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-        return multi_pw_aff(ctx=ctx, ptr=res)
+        return MultiPwAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_multi_pw_aff_from_multi_aff(a_0):
@@ -666,17 +672,19 @@ def isl_multi_pw_aff_copy(a_0):
   return js.globals.Module.ccall('isl_multi_pw_aff_copy', retType, argTypes, args)
 isl.isl_multi_pw_aff_copy = isl_multi_pw_aff_copy
 
-class pw_multi_aff(multi_pw_aff, union_pw_multi_aff):
+multi_pw_aff = MultiPwAff
+
+class PwMultiAff(MultiPwAff, UnionPwMultiAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is multi_aff:
+        if len(args) == 1 and args[0].__class__ is MultiAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_pw_multi_aff_from_multi_aff(isl.isl_multi_aff_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is pw_aff:
+        if len(args) == 1 and args[0].__class__ is PwAff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_pw_multi_aff_from_pw_aff(isl.isl_pw_aff_copy(args[0].ptr))
             return
@@ -693,86 +701,86 @@ class pw_multi_aff(multi_pw_aff, union_pw_multi_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.pw_multi_aff("""%s""")' % s
+            return 'isl.PwMultiAff("""%s""")' % s
         else:
-            return 'isl.pw_multi_aff("%s")' % s
+            return 'isl.PwMultiAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_multi_aff:
-                arg0 = pw_multi_aff(arg0)
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_multi_aff:
-                arg1 = pw_multi_aff(arg1)
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).add(arg1)
+            return MultiPwAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_multi_aff_add(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-        return pw_multi_aff(ctx=ctx, ptr=res)
+        return PwMultiAff(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_multi_aff:
-                arg0 = pw_multi_aff(arg0)
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_multi_aff:
-                arg1 = pw_multi_aff(arg1)
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).flat_range_product(arg1)
+            return MultiPwAff(arg0).flat_range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_multi_aff_flat_range_product(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-        return pw_multi_aff(ctx=ctx, ptr=res)
+        return PwMultiAff(ctx=ctx, ptr=res)
     def product(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_multi_aff:
-                arg0 = pw_multi_aff(arg0)
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_multi_aff:
-                arg1 = pw_multi_aff(arg1)
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).product(arg1)
+            return MultiPwAff(arg0).product(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_multi_aff_product(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-        return pw_multi_aff(ctx=ctx, ptr=res)
+        return PwMultiAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is multi_aff:
+        if arg1.__class__ is MultiAff:
             res = isl.isl_pw_multi_aff_pullback_multi_aff(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-            return pw_multi_aff(ctx=arg0.ctx, ptr=res)
-        if arg1.__class__ is pw_multi_aff:
+            return PwMultiAff(ctx=arg0.ctx, ptr=res)
+        if arg1.__class__ is PwMultiAff:
             res = isl.isl_pw_multi_aff_pullback_pw_multi_aff(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-            return pw_multi_aff(ctx=arg0.ctx, ptr=res)
+            return PwMultiAff(ctx=arg0.ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_multi_aff:
-                arg0 = pw_multi_aff(arg0)
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_multi_aff:
-                arg1 = pw_multi_aff(arg1)
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).range_product(arg1)
+            return MultiPwAff(arg0).range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_multi_aff_range_product(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-        return pw_multi_aff(ctx=ctx, ptr=res)
+        return PwMultiAff(ctx=ctx, ptr=res)
     def union_add(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_multi_aff:
-                arg0 = pw_multi_aff(arg0)
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_multi_aff:
-                arg1 = pw_multi_aff(arg1)
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).union_add(arg1)
+            return MultiPwAff(arg0).union_add(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_multi_aff_union_add(isl.isl_pw_multi_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-        return pw_multi_aff(ctx=ctx, ptr=res)
+        return PwMultiAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_pw_multi_aff_from_multi_aff(a_0):
@@ -866,13 +874,15 @@ def isl_pw_multi_aff_copy(a_0):
   return js.globals.Module.ccall('isl_pw_multi_aff_copy', retType, argTypes, args)
 isl.isl_pw_multi_aff_copy = isl_pw_multi_aff_copy
 
-class pw_aff(union_pw_aff, multi_pw_aff, pw_multi_aff):
+pw_multi_aff = PwMultiAff
+
+class PwAff(UnionPwAff, MultiPwAff, PwMultiAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is aff:
+        if len(args) == 1 and args[0].__class__ is Aff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_pw_aff_from_aff(isl.isl_aff_copy(args[0].ptr))
             return
@@ -889,47 +899,47 @@ class pw_aff(union_pw_aff, multi_pw_aff, pw_multi_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.pw_aff("""%s""")' % s
+            return 'isl.PwAff("""%s""")' % s
         else:
-            return 'isl.pw_aff("%s")' % s
+            return 'isl.PwAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_aff:
-                arg0 = pw_aff(arg0)
+            if not arg0.__class__ is PwAff:
+                arg0 = PwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_aff:
-                arg1 = pw_aff(arg1)
+            if not arg1.__class__ is PwAff:
+                arg1 = PwAff(arg1)
         except:
-            return union_pw_aff(arg0).add(arg1)
+            return UnionPwAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_aff_add(isl.isl_pw_aff_copy(arg0.ptr), isl.isl_pw_aff_copy(arg1.ptr))
-        return pw_aff(ctx=ctx, ptr=res)
+        return PwAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is multi_aff:
+        if arg1.__class__ is MultiAff:
             res = isl.isl_pw_aff_pullback_multi_aff(isl.isl_pw_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-            return pw_aff(ctx=arg0.ctx, ptr=res)
-        if arg1.__class__ is pw_multi_aff:
+            return PwAff(ctx=arg0.ctx, ptr=res)
+        if arg1.__class__ is PwMultiAff:
             res = isl.isl_pw_aff_pullback_pw_multi_aff(isl.isl_pw_aff_copy(arg0.ptr), isl.isl_pw_multi_aff_copy(arg1.ptr))
-            return pw_aff(ctx=arg0.ctx, ptr=res)
-        if arg1.__class__ is multi_pw_aff:
+            return PwAff(ctx=arg0.ctx, ptr=res)
+        if arg1.__class__ is MultiPwAff:
             res = isl.isl_pw_aff_pullback_multi_pw_aff(isl.isl_pw_aff_copy(arg0.ptr), isl.isl_multi_pw_aff_copy(arg1.ptr))
-            return pw_aff(ctx=arg0.ctx, ptr=res)
+            return PwAff(ctx=arg0.ctx, ptr=res)
     def union_add(arg0, arg1):
         try:
-            if not arg0.__class__ is pw_aff:
-                arg0 = pw_aff(arg0)
+            if not arg0.__class__ is PwAff:
+                arg0 = PwAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is pw_aff:
-                arg1 = pw_aff(arg1)
+            if not arg1.__class__ is PwAff:
+                arg1 = PwAff(arg1)
         except:
-            return union_pw_aff(arg0).union_add(arg1)
+            return UnionPwAff(arg0).union_add(arg1)
         ctx = arg0.ctx
         res = isl.isl_pw_aff_union_add(isl.isl_pw_aff_copy(arg0.ptr), isl.isl_pw_aff_copy(arg1.ptr))
-        return pw_aff(ctx=ctx, ptr=res)
+        return PwAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_pw_aff_from_aff(a_0):
@@ -1002,13 +1012,15 @@ def isl_pw_aff_copy(a_0):
   return js.globals.Module.ccall('isl_pw_aff_copy', retType, argTypes, args)
 isl.isl_pw_aff_copy = isl_pw_aff_copy
 
-class multi_aff(multi_pw_aff, pw_multi_aff):
+pw_aff = PwAff
+
+class MultiAff(MultiPwAff, PwMultiAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is aff:
+        if len(args) == 1 and args[0].__class__ is Aff:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_multi_aff_from_aff(isl.isl_aff_copy(args[0].ptr))
             return
@@ -1025,69 +1037,69 @@ class multi_aff(multi_pw_aff, pw_multi_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.multi_aff("""%s""")' % s
+            return 'isl.MultiAff("""%s""")' % s
         else:
-            return 'isl.multi_aff("%s")' % s
+            return 'isl.MultiAff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_aff:
-                arg0 = multi_aff(arg0)
+            if not arg0.__class__ is MultiAff:
+                arg0 = MultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_aff:
-                arg1 = multi_aff(arg1)
+            if not arg1.__class__ is MultiAff:
+                arg1 = MultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).add(arg1)
+            return MultiPwAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_aff_add(isl.isl_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-        return multi_aff(ctx=ctx, ptr=res)
+        return MultiAff(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_aff:
-                arg0 = multi_aff(arg0)
+            if not arg0.__class__ is MultiAff:
+                arg0 = MultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_aff:
-                arg1 = multi_aff(arg1)
+            if not arg1.__class__ is MultiAff:
+                arg1 = MultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).flat_range_product(arg1)
+            return MultiPwAff(arg0).flat_range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_aff_flat_range_product(isl.isl_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-        return multi_aff(ctx=ctx, ptr=res)
+        return MultiAff(ctx=ctx, ptr=res)
     def product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_aff:
-                arg0 = multi_aff(arg0)
+            if not arg0.__class__ is MultiAff:
+                arg0 = MultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_aff:
-                arg1 = multi_aff(arg1)
+            if not arg1.__class__ is MultiAff:
+                arg1 = MultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).product(arg1)
+            return MultiPwAff(arg0).product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_aff_product(isl.isl_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-        return multi_aff(ctx=ctx, ptr=res)
+        return MultiAff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is multi_aff:
+        if arg1.__class__ is MultiAff:
             res = isl.isl_multi_aff_pullback_multi_aff(isl.isl_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-            return multi_aff(ctx=arg0.ctx, ptr=res)
+            return MultiAff(ctx=arg0.ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_aff:
-                arg0 = multi_aff(arg0)
+            if not arg0.__class__ is MultiAff:
+                arg0 = MultiAff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_aff:
-                arg1 = multi_aff(arg1)
+            if not arg1.__class__ is MultiAff:
+                arg1 = MultiAff(arg1)
         except:
-            return multi_pw_aff(arg0).range_product(arg1)
+            return MultiPwAff(arg0).range_product(arg1)
         ctx = arg0.ctx
         res = isl.isl_multi_aff_range_product(isl.isl_multi_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-        return multi_aff(ctx=ctx, ptr=res)
+        return MultiAff(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_multi_aff_from_aff(a_0):
@@ -1160,7 +1172,9 @@ def isl_multi_aff_copy(a_0):
   return js.globals.Module.ccall('isl_multi_aff_copy', retType, argTypes, args)
 isl.isl_multi_aff_copy = isl_multi_aff_copy
 
-class aff(pw_aff, multi_aff):
+multi_aff = MultiAff
+
+class Aff(PwAff, MultiAff):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -1179,27 +1193,27 @@ class aff(pw_aff, multi_aff):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.aff("""%s""")' % s
+            return 'isl.Aff("""%s""")' % s
         else:
-            return 'isl.aff("%s")' % s
+            return 'isl.Aff("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is aff:
-                arg0 = aff(arg0)
+            if not arg0.__class__ is Aff:
+                arg0 = Aff(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is aff:
-                arg1 = aff(arg1)
+            if not arg1.__class__ is Aff:
+                arg1 = Aff(arg1)
         except:
-            return pw_aff(arg0).add(arg1)
+            return PwAff(arg0).add(arg1)
         ctx = arg0.ctx
         res = isl.isl_aff_add(isl.isl_aff_copy(arg0.ptr), isl.isl_aff_copy(arg1.ptr))
-        return aff(ctx=ctx, ptr=res)
+        return Aff(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is multi_aff:
+        if arg1.__class__ is MultiAff:
             res = isl.isl_aff_pullback_multi_aff(isl.isl_aff_copy(arg0.ptr), isl.isl_multi_aff_copy(arg1.ptr))
-            return aff(ctx=arg0.ctx, ptr=res)
+            return Aff(ctx=arg0.ctx, ptr=res)
 
 @staticmethod
 def isl_aff_read_from_str(a_0, a_1):
@@ -1244,17 +1258,317 @@ def isl_aff_copy(a_0):
   return js.globals.Module.ccall('isl_aff_copy', retType, argTypes, args)
 isl.isl_aff_copy = isl_aff_copy
 
-class union_map:
+aff = Aff
+
+class AstBuild:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is basic_map:
+        if len(args) == 0:
+            self.ctx = Context.getDefaultInstance()
+            self.ptr = isl.isl_ast_build_alloc(self.ctx)
+            return
+        if len(args) == 1 and args[0].__class__ is Set:
+            self.ctx = Context.getDefaultInstance()
+            self.ptr = isl.isl_ast_build_from_context(isl.isl_set_copy(args[0].ptr))
+            return
+        raise Error
+    def __del__(self):
+        if hasattr(self, 'ptr'):
+            isl.isl_ast_build_free(self.ptr)
+    def __str__(self):
+        return str(isl.isl_ast_build_to_str(self.ptr))
+    def __repr__(self):
+        s = str(self)
+        if '"' in s:
+            return 'isl.AstBuild("""%s""")' % s
+        else:
+            return 'isl.AstBuild("%s")' % s
+    def access_from_multi_pw_aff(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_access_from_multi_pw_aff(arg0.ptr, isl.isl_multi_pw_aff_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def access_from_pw_multi_aff(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_access_from_pw_multi_aff(arg0.ptr, isl.isl_pw_multi_aff_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def call_from_multi_pw_aff(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is MultiPwAff:
+                arg1 = MultiPwAff(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_call_from_multi_pw_aff(arg0.ptr, isl.isl_multi_pw_aff_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def call_from_pw_multi_aff(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is PwMultiAff:
+                arg1 = PwMultiAff(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_call_from_pw_multi_aff(arg0.ptr, isl.isl_pw_multi_aff_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def expr_from_pw_aff(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is PwAff:
+                arg1 = PwAff(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_expr_from_pw_aff(arg0.ptr, isl.isl_pw_aff_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def expr_from_set(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_expr_from_set(arg0.ptr, isl.isl_set_copy(arg1.ptr))
+        return AstExpr(ctx=ctx, ptr=res)
+    def node_from_schedule_map(arg0, arg1):
+        try:
+            if not arg0.__class__ is AstBuild:
+                arg0 = AstBuild(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_node_from_schedule_map(arg0.ptr, isl.isl_union_map_copy(arg1.ptr))
+        return AstNode(ctx=ctx, ptr=res)
+
+@staticmethod
+def isl_ast_build_alloc(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0.ptr]
+  return js.globals.Module.ccall('isl_ast_build_alloc', retType, argTypes, args)
+isl.isl_ast_build_alloc = isl_ast_build_alloc
+@staticmethod
+def isl_ast_build_from_context(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_build_from_context', retType, argTypes, args)
+isl.isl_ast_build_from_context = isl_ast_build_from_context
+@staticmethod
+def isl_ast_build_access_from_multi_pw_aff(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_access_from_multi_pw_aff', retType, argTypes, args)
+isl.isl_ast_build_access_from_multi_pw_aff = isl_ast_build_access_from_multi_pw_aff
+@staticmethod
+def isl_ast_build_access_from_pw_multi_aff(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_access_from_pw_multi_aff', retType, argTypes, args)
+isl.isl_ast_build_access_from_pw_multi_aff = isl_ast_build_access_from_pw_multi_aff
+@staticmethod
+def isl_ast_build_call_from_multi_pw_aff(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_call_from_multi_pw_aff', retType, argTypes, args)
+isl.isl_ast_build_call_from_multi_pw_aff = isl_ast_build_call_from_multi_pw_aff
+@staticmethod
+def isl_ast_build_call_from_pw_multi_aff(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_call_from_pw_multi_aff', retType, argTypes, args)
+isl.isl_ast_build_call_from_pw_multi_aff = isl_ast_build_call_from_pw_multi_aff
+@staticmethod
+def isl_ast_build_expr_from_pw_aff(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_expr_from_pw_aff', retType, argTypes, args)
+isl.isl_ast_build_expr_from_pw_aff = isl_ast_build_expr_from_pw_aff
+@staticmethod
+def isl_ast_build_expr_from_set(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_expr_from_set', retType, argTypes, args)
+isl.isl_ast_build_expr_from_set = isl_ast_build_expr_from_set
+@staticmethod
+def isl_ast_build_node_from_schedule_map(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_ast_build_node_from_schedule_map', retType, argTypes, args)
+isl.isl_ast_build_node_from_schedule_map = isl_ast_build_node_from_schedule_map
+@staticmethod
+def isl_ast_build_free(a_0):
+  retType = None
+  argTypes = ['number']
+  args = [a_0.ptr]
+  js.globals.Module.ccall('isl_ast_build_free', retType, argTypes, args)
+isl.isl_ast_build_free = isl_ast_build_free
+@staticmethod
+def isl_ast_build_to_str(a_0):
+  retType = 'string'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_build_to_str', retType, argTypes, args)
+isl.isl_ast_build_to_str = isl_ast_build_to_str
+@staticmethod
+def isl_ast_build_copy(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_build_copy', retType, argTypes, args)
+isl.isl_ast_build_copy = isl_ast_build_copy
+
+ast_build = AstBuild
+
+class AstExpr:
+    def __init__(self, *args, **keywords):
+        if "ptr" in keywords:
+            self.ctx = keywords["ctx"]
+            self.ptr = keywords["ptr"]
+            return
+        raise Error
+    def __del__(self):
+        if hasattr(self, 'ptr'):
+            isl.isl_ast_expr_free(self.ptr)
+    def __str__(self):
+        return str(isl.isl_ast_expr_to_str(self.ptr))
+    def __repr__(self):
+        s = str(self)
+        if '"' in s:
+            return 'isl.AstExpr("""%s""")' % s
+        else:
+            return 'isl.AstExpr("%s")' % s
+
+@staticmethod
+def isl_ast_expr_free(a_0):
+  retType = None
+  argTypes = ['number']
+  args = [a_0.ptr]
+  js.globals.Module.ccall('isl_ast_expr_free', retType, argTypes, args)
+isl.isl_ast_expr_free = isl_ast_expr_free
+@staticmethod
+def isl_ast_expr_to_str(a_0):
+  retType = 'string'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_expr_to_str', retType, argTypes, args)
+isl.isl_ast_expr_to_str = isl_ast_expr_to_str
+@staticmethod
+def isl_ast_expr_copy(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_expr_copy', retType, argTypes, args)
+isl.isl_ast_expr_copy = isl_ast_expr_copy
+
+ast_expr = AstExpr
+
+class AstNode:
+    def __init__(self, *args, **keywords):
+        if "ptr" in keywords:
+            self.ctx = keywords["ctx"]
+            self.ptr = keywords["ptr"]
+            return
+        raise Error
+    def __del__(self):
+        if hasattr(self, 'ptr'):
+            isl.isl_ast_node_free(self.ptr)
+    def __str__(self):
+        return str(isl.isl_ast_node_to_str(self.ptr))
+    def __repr__(self):
+        s = str(self)
+        if '"' in s:
+            return 'isl.AstNode("""%s""")' % s
+        else:
+            return 'isl.AstNode("%s")' % s
+
+@staticmethod
+def isl_ast_node_free(a_0):
+  retType = None
+  argTypes = ['number']
+  args = [a_0.ptr]
+  js.globals.Module.ccall('isl_ast_node_free', retType, argTypes, args)
+isl.isl_ast_node_free = isl_ast_node_free
+@staticmethod
+def isl_ast_node_to_str(a_0):
+  retType = 'string'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_node_to_str', retType, argTypes, args)
+isl.isl_ast_node_to_str = isl_ast_node_to_str
+@staticmethod
+def isl_ast_node_copy(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_node_copy', retType, argTypes, args)
+isl.isl_ast_node_copy = isl_ast_node_copy
+
+ast_node = AstNode
+
+class UnionMap:
+    def __init__(self, *args, **keywords):
+        if "ptr" in keywords:
+            self.ctx = keywords["ctx"]
+            self.ptr = keywords["ptr"]
+            return
+        if len(args) == 1 and args[0].__class__ is BasicMap:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_map_from_basic_map(isl.isl_basic_map_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is map:
+        if len(args) == 1 and args[0].__class__ is Map:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_map_from_map(isl.isl_map_copy(args[0].ptr))
             return
@@ -1271,173 +1585,173 @@ class union_map:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_map("""%s""")' % s
+            return 'isl.UnionMap("""%s""")' % s
         else:
-            return 'isl.union_map("%s")' % s
+            return 'isl.UnionMap("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_affine_hull(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def apply_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_apply_domain(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def apply_range(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_apply_range(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def coalesce(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_coalesce(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def compute_divs(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_compute_divs(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def deltas(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_deltas(isl.isl_union_map_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_detect_equalities(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def domain(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain(isl.isl_union_map_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def domain_factor_domain(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain_factor_domain(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def domain_factor_range(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain_factor_range(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def domain_map(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain_map(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def domain_map_union_pw_multi_aff(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain_map_union_pw_multi_aff(isl.isl_union_map_copy(arg0.ptr))
-        return union_pw_multi_aff(ctx=ctx, ptr=res)
+        return UnionPwMultiAff(ctx=ctx, ptr=res)
     def domain_product(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_domain_product(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def factor_domain(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_factor_domain(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def factor_range(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_factor_range(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def fixed_power(arg0, arg1):
-        if arg1.__class__ is val:
+        if arg1.__class__ is Val:
             res = isl.isl_union_map_fixed_power_val(isl.isl_union_map_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
-            return union_map(ctx=arg0.ctx, ptr=res)
+            return UnionMap(ctx=arg0.ctx, ptr=res)
     def foreach_map(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         exc_info = [None]
         fn = CFUNCTYPE(c_int, c_void_p, c_void_p)
         def cb_func(cb_arg0, cb_arg1):
-            cb_arg0 = map(ctx=arg0.ctx, ptr=cb_arg0)
+            cb_arg0 = Map(ctx=arg0.ctx, ptr=cb_arg0)
             try:
                 arg1(cb_arg0)
             except:
@@ -1453,143 +1767,143 @@ class union_map:
         return res
     @staticmethod
     def convert_from(arg0):
-        if arg0.__class__ is union_pw_multi_aff:
+        if arg0.__class__ is UnionPwMultiAff:
             res = isl.isl_union_map_from_union_pw_multi_aff(isl.isl_union_pw_multi_aff_copy(arg0.ptr))
-            return union_map(ctx=arg0.ctx, ptr=res)
-        if arg0.__class__ is multi_union_pw_aff:
+            return UnionMap(ctx=arg0.ctx, ptr=res)
+        if arg0.__class__ is MultiUnionPwAff:
             res = isl.isl_union_map_from_multi_union_pw_aff(isl.isl_multi_union_pw_aff_copy(arg0.ptr))
-            return union_map(ctx=arg0.ctx, ptr=res)
+            return UnionMap(ctx=arg0.ctx, ptr=res)
     @staticmethod
     def from_domain_and_range(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_from_domain_and_range(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_gist(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def gist_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_gist_domain(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def gist_params(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_gist_params(isl.isl_union_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def gist_range(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_gist_range(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_intersect(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def intersect_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_intersect_domain(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def intersect_params(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_intersect_params(isl.isl_union_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def intersect_range(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_intersect_range(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def is_bijective(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -1599,8 +1913,8 @@ class union_map:
         return bool(res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -1610,13 +1924,13 @@ class union_map:
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -1626,8 +1940,8 @@ class union_map:
         return bool(res)
     def is_injective(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -1637,8 +1951,8 @@ class union_map:
         return bool(res)
     def is_single_valued(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -1648,13 +1962,13 @@ class union_map:
         return bool(res)
     def is_strict_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -1664,13 +1978,13 @@ class union_map:
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -1680,178 +1994,178 @@ class union_map:
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_lexmax(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_lexmin(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def polyhedral_hull(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_polyhedral_hull(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def product(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_product(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def range(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_range(isl.isl_union_map_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def range_factor_domain(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_range_factor_domain(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def range_factor_range(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_range_factor_range(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def range_map(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_range_map(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_range_product(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def reverse(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_reverse(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def subtract(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_subtract(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def subtract_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_subtract_domain(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def subtract_range(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_subtract_range(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_union(isl.isl_union_map_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def wrap(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_wrap(isl.isl_union_map_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def zip(arg0):
         try:
-            if not arg0.__class__ is union_map:
-                arg0 = union_map(arg0)
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_map_zip(isl.isl_union_map_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_map_from_basic_map(a_0):
@@ -2253,7 +2567,9 @@ def isl_union_map_copy(a_0):
   return js.globals.Module.ccall('isl_union_map_copy', retType, argTypes, args)
 isl.isl_union_map_copy = isl_union_map_copy
 
-class map(union_map):
+union_map = UnionMap
+
+class Map(UnionMap):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -2263,7 +2579,7 @@ class map(union_map):
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_map_read_from_str(self.ctx, args[0])
             return
-        if len(args) == 1 and args[0].__class__ is basic_map:
+        if len(args) == 1 and args[0].__class__ is BasicMap:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_map_from_basic_map(isl.isl_basic_map_copy(args[0].ptr))
             return
@@ -2276,119 +2592,119 @@ class map(union_map):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.map("""%s""")' % s
+            return 'isl.Map("""%s""")' % s
         else:
-            return 'isl.map("%s")' % s
+            return 'isl.Map("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_affine_hull(isl.isl_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def apply_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).apply_domain(arg1)
+            return UnionMap(arg0).apply_domain(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_apply_domain(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def apply_range(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).apply_range(arg1)
+            return UnionMap(arg0).apply_range(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_apply_range(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def coalesce(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_coalesce(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def complement(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_complement(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def deltas(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_deltas(isl.isl_map_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_detect_equalities(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def flatten(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_flatten(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def flatten_domain(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_flatten_domain(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def flatten_range(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_flatten_range(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def foreach_basic_map(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         exc_info = [None]
         fn = CFUNCTYPE(c_int, c_void_p, c_void_p)
         def cb_func(cb_arg0, cb_arg1):
-            cb_arg0 = basic_map(ctx=arg0.ctx, ptr=cb_arg0)
+            cb_arg0 = BasicMap(ctx=arg0.ctx, ptr=cb_arg0)
             try:
                 arg1(cb_arg0)
             except:
@@ -2404,92 +2720,92 @@ class map(union_map):
         return res
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).gist(arg1)
+            return UnionMap(arg0).gist(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_gist(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def gist_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_map(arg0).gist_domain(arg1)
+            return UnionMap(arg0).gist_domain(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_gist_domain(isl.isl_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).intersect(arg1)
+            return UnionMap(arg0).intersect(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_intersect(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def intersect_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_map(arg0).intersect_domain(arg1)
+            return UnionMap(arg0).intersect_domain(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_intersect_domain(isl.isl_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def intersect_params(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_map(arg0).intersect_params(arg1)
+            return UnionMap(arg0).intersect_params(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_intersect_params(isl.isl_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def intersect_range(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_map(arg0).intersect_range(arg1)
+            return UnionMap(arg0).intersect_range(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_intersect_range(isl.isl_map_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def is_bijective(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -2499,15 +2815,15 @@ class map(union_map):
         return bool(res)
     def is_disjoint(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).is_disjoint(arg1)
+            return UnionMap(arg0).is_disjoint(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_is_disjoint(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -2515,8 +2831,8 @@ class map(union_map):
         return bool(res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -2526,15 +2842,15 @@ class map(union_map):
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).is_equal(arg1)
+            return UnionMap(arg0).is_equal(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_is_equal(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -2542,8 +2858,8 @@ class map(union_map):
         return bool(res)
     def is_injective(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -2553,8 +2869,8 @@ class map(union_map):
         return bool(res)
     def is_single_valued(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -2564,15 +2880,15 @@ class map(union_map):
         return bool(res)
     def is_strict_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).is_strict_subset(arg1)
+            return UnionMap(arg0).is_strict_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_is_strict_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -2580,15 +2896,15 @@ class map(union_map):
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).is_subset(arg1)
+            return UnionMap(arg0).is_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_is_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -2596,86 +2912,86 @@ class map(union_map):
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_lexmax(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_lexmin(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def polyhedral_hull(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_polyhedral_hull(isl.isl_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def reverse(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_reverse(isl.isl_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def sample(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_sample(isl.isl_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def subtract(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).subtract(arg1)
+            return UnionMap(arg0).subtract(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_subtract(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_map(arg0).union(arg1)
+            return UnionMap(arg0).union(arg1)
         ctx = arg0.ctx
         res = isl.isl_map_union(isl.isl_map_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def unshifted_simple_hull(arg0):
         try:
-            if not arg0.__class__ is map:
-                arg0 = map(arg0)
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_map_unshifted_simple_hull(isl.isl_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_map_read_from_str(a_0, a_1):
@@ -2944,7 +3260,9 @@ def isl_map_copy(a_0):
   return js.globals.Module.ccall('isl_map_copy', retType, argTypes, args)
 isl.isl_map_copy = isl_map_copy
 
-class basic_map(map):
+map = Map
+
+class BasicMap(Map):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -2963,151 +3281,151 @@ class basic_map(map):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.basic_map("""%s""")' % s
+            return 'isl.BasicMap("""%s""")' % s
         else:
-            return 'isl.basic_map("%s")' % s
+            return 'isl.BasicMap("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_affine_hull(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def apply_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).apply_domain(arg1)
+            return Map(arg0).apply_domain(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_apply_domain(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def apply_range(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).apply_range(arg1)
+            return Map(arg0).apply_range(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_apply_range(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def deltas(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_deltas(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_detect_equalities(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def flatten(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_flatten(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def flatten_domain(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_flatten_domain(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def flatten_range(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_flatten_range(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).gist(arg1)
+            return Map(arg0).gist(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_gist(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).intersect(arg1)
+            return Map(arg0).intersect(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_intersect(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def intersect_domain(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return map(arg0).intersect_domain(arg1)
+            return Map(arg0).intersect_domain(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_intersect_domain(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def intersect_range(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return map(arg0).intersect_range(arg1)
+            return Map(arg0).intersect_range(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_intersect_range(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -3117,15 +3435,15 @@ class basic_map(map):
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).is_equal(arg1)
+            return Map(arg0).is_equal(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_is_equal(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -3133,15 +3451,15 @@ class basic_map(map):
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).is_subset(arg1)
+            return Map(arg0).is_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_is_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -3149,54 +3467,54 @@ class basic_map(map):
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_lexmax(isl.isl_basic_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_lexmin(isl.isl_basic_map_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def reverse(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_reverse(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def sample(arg0):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_map_sample(isl.isl_basic_map_copy(arg0.ptr))
-        return basic_map(ctx=ctx, ptr=res)
+        return BasicMap(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_map:
-                arg0 = basic_map(arg0)
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return map(arg0).union(arg1)
+            return Map(arg0).union(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_map_union(isl.isl_basic_map_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_basic_map_read_from_str(a_0, a_1):
@@ -3367,21 +3685,23 @@ def isl_basic_map_copy(a_0):
   return js.globals.Module.ccall('isl_basic_map_copy', retType, argTypes, args)
 isl.isl_basic_map_copy = isl_basic_map_copy
 
-class union_set:
+basic_map = BasicMap
+
+class UnionSet:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is basic_set:
+        if len(args) == 1 and args[0].__class__ is BasicSet:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_set_from_basic_set(isl.isl_basic_set_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is set:
+        if len(args) == 1 and args[0].__class__ is Set:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_set_from_set(isl.isl_set_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is point:
+        if len(args) == 1 and args[0].__class__ is Point:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_set_from_point(isl.isl_point_copy(args[0].ptr))
             return
@@ -3398,69 +3718,69 @@ class union_set:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_set("""%s""")' % s
+            return 'isl.UnionSet("""%s""")' % s
         else:
-            return 'isl.union_set("%s")' % s
+            return 'isl.UnionSet("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_affine_hull(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def apply(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_apply(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def coalesce(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_coalesce(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def compute_divs(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_compute_divs(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_detect_equalities(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def foreach_point(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         exc_info = [None]
         fn = CFUNCTYPE(c_int, c_void_p, c_void_p)
         def cb_func(cb_arg0, cb_arg1):
-            cb_arg0 = point(ctx=arg0.ctx, ptr=cb_arg0)
+            cb_arg0 = Point(ctx=arg0.ctx, ptr=cb_arg0)
             try:
                 arg1(cb_arg0)
             except:
@@ -3476,14 +3796,14 @@ class union_set:
         return res
     def foreach_set(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         exc_info = [None]
         fn = CFUNCTYPE(c_int, c_void_p, c_void_p)
         def cb_func(cb_arg0, cb_arg1):
-            cb_arg0 = set(ctx=arg0.ctx, ptr=cb_arg0)
+            cb_arg0 = Set(ctx=arg0.ctx, ptr=cb_arg0)
             try:
                 arg1(cb_arg0)
             except:
@@ -3499,73 +3819,73 @@ class union_set:
         return res
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_gist(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def gist_params(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_gist_params(isl.isl_union_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def identity(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_identity(isl.isl_union_set_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_intersect(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def intersect_params(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_intersect_params(isl.isl_union_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -3575,13 +3895,13 @@ class union_set:
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -3591,13 +3911,13 @@ class union_set:
         return bool(res)
     def is_strict_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -3607,13 +3927,13 @@ class union_set:
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
@@ -3623,77 +3943,77 @@ class union_set:
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_lexmax(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_lexmin(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def polyhedral_hull(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_polyhedral_hull(isl.isl_union_set_copy(arg0.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def sample_point(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_sample_point(isl.isl_union_set_copy(arg0.ptr))
-        return point(ctx=ctx, ptr=res)
+        return Point(ctx=ctx, ptr=res)
     def subtract(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_subtract(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_set:
-                arg1 = union_set(arg1)
+            if not arg1.__class__ is UnionSet:
+                arg1 = UnionSet(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_union(isl.isl_union_set_copy(arg0.ptr), isl.isl_union_set_copy(arg1.ptr))
-        return union_set(ctx=ctx, ptr=res)
+        return UnionSet(ctx=ctx, ptr=res)
     def unwrap(arg0):
         try:
-            if not arg0.__class__ is union_set:
-                arg0 = union_set(arg0)
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_set_unwrap(isl.isl_union_set_copy(arg0.ptr))
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_set_from_basic_set(a_0):
@@ -3906,7 +4226,9 @@ def isl_union_set_copy(a_0):
   return js.globals.Module.ccall('isl_union_set_copy', retType, argTypes, args)
 isl.isl_union_set_copy = isl_union_set_copy
 
-class set(union_set):
+union_set = UnionSet
+
+class Set(UnionSet):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -3916,11 +4238,11 @@ class set(union_set):
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_set_read_from_str(self.ctx, args[0])
             return
-        if len(args) == 1 and args[0].__class__ is basic_set:
+        if len(args) == 1 and args[0].__class__ is BasicSet:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_set_from_basic_set(isl.isl_basic_set_copy(args[0].ptr))
             return
-        if len(args) == 1 and args[0].__class__ is point:
+        if len(args) == 1 and args[0].__class__ is Point:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_set_from_point(isl.isl_point_copy(args[0].ptr))
             return
@@ -3933,78 +4255,78 @@ class set(union_set):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.set("""%s""")' % s
+            return 'isl.Set("""%s""")' % s
         else:
-            return 'isl.set("%s")' % s
+            return 'isl.Set("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_affine_hull(isl.isl_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def apply(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is map:
-                arg1 = map(arg1)
+            if not arg1.__class__ is Map:
+                arg1 = Map(arg1)
         except:
-            return union_set(arg0).apply(arg1)
+            return UnionSet(arg0).apply(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_apply(isl.isl_set_copy(arg0.ptr), isl.isl_map_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def coalesce(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_coalesce(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def complement(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_complement(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_detect_equalities(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def flatten(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_flatten(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def foreach_basic_set(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         exc_info = [None]
         fn = CFUNCTYPE(c_int, c_void_p, c_void_p)
         def cb_func(cb_arg0, cb_arg1):
-            cb_arg0 = basic_set(ctx=arg0.ctx, ptr=cb_arg0)
+            cb_arg0 = BasicSet(ctx=arg0.ctx, ptr=cb_arg0)
             try:
                 arg1(cb_arg0)
             except:
@@ -4020,66 +4342,66 @@ class set(union_set):
         return res
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).gist(arg1)
+            return UnionSet(arg0).gist(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_gist(isl.isl_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def identity(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_identity(isl.isl_set_copy(arg0.ptr))
-        return map(ctx=ctx, ptr=res)
+        return Map(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).intersect(arg1)
+            return UnionSet(arg0).intersect(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_intersect(isl.isl_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def intersect_params(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).intersect_params(arg1)
+            return UnionSet(arg0).intersect_params(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_intersect_params(isl.isl_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def is_disjoint(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).is_disjoint(arg1)
+            return UnionSet(arg0).is_disjoint(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_is_disjoint(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4087,8 +4409,8 @@ class set(union_set):
         return bool(res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -4098,15 +4420,15 @@ class set(union_set):
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).is_equal(arg1)
+            return UnionSet(arg0).is_equal(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_is_equal(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4114,15 +4436,15 @@ class set(union_set):
         return bool(res)
     def is_strict_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).is_strict_subset(arg1)
+            return UnionSet(arg0).is_strict_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_is_strict_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4130,15 +4452,15 @@ class set(union_set):
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).is_subset(arg1)
+            return UnionSet(arg0).is_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_is_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4146,8 +4468,8 @@ class set(union_set):
         return bool(res)
     def is_wrapping(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -4157,105 +4479,105 @@ class set(union_set):
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_lexmax(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_lexmin(isl.isl_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def max_val(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is aff:
-                arg1 = aff(arg1)
+            if not arg1.__class__ is Aff:
+                arg1 = Aff(arg1)
         except:
-            return union_set(arg0).max_val(arg1)
+            return UnionSet(arg0).max_val(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_max_val(arg0.ptr, arg1.ptr)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
     def min_val(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is aff:
-                arg1 = aff(arg1)
+            if not arg1.__class__ is Aff:
+                arg1 = Aff(arg1)
         except:
-            return union_set(arg0).min_val(arg1)
+            return UnionSet(arg0).min_val(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_min_val(arg0.ptr, arg1.ptr)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
     def polyhedral_hull(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_polyhedral_hull(isl.isl_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def sample(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_sample(isl.isl_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def subtract(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).subtract(arg1)
+            return UnionSet(arg0).subtract(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_subtract(isl.isl_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is set:
-                arg1 = set(arg1)
+            if not arg1.__class__ is Set:
+                arg1 = Set(arg1)
         except:
-            return union_set(arg0).union(arg1)
+            return UnionSet(arg0).union(arg1)
         ctx = arg0.ctx
         res = isl.isl_set_union(isl.isl_set_copy(arg0.ptr), isl.isl_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def unshifted_simple_hull(arg0):
         try:
-            if not arg0.__class__ is set:
-                arg0 = set(arg0)
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_set_unshifted_simple_hull(isl.isl_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_set_read_from_str(a_0, a_1):
@@ -4482,7 +4804,9 @@ def isl_set_copy(a_0):
   return js.globals.Module.ccall('isl_set_copy', retType, argTypes, args)
 isl.isl_set_copy = isl_set_copy
 
-class basic_set(set):
+set = Set
+
+class BasicSet(Set):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -4492,7 +4816,7 @@ class basic_set(set):
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_basic_set_read_from_str(self.ctx, args[0])
             return
-        if len(args) == 1 and args[0].__class__ is point:
+        if len(args) == 1 and args[0].__class__ is Point:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_basic_set_from_point(isl.isl_point_copy(args[0].ptr))
             return
@@ -4505,96 +4829,96 @@ class basic_set(set):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.basic_set("""%s""")' % s
+            return 'isl.BasicSet("""%s""")' % s
         else:
-            return 'isl.basic_set("%s")' % s
+            return 'isl.BasicSet("%s")' % s
     def affine_hull(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_affine_hull(isl.isl_basic_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def apply(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_map:
-                arg1 = basic_map(arg1)
+            if not arg1.__class__ is BasicMap:
+                arg1 = BasicMap(arg1)
         except:
-            return set(arg0).apply(arg1)
+            return Set(arg0).apply(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_apply(isl.isl_basic_set_copy(arg0.ptr), isl.isl_basic_map_copy(arg1.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def detect_equalities(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_detect_equalities(isl.isl_basic_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def flatten(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_flatten(isl.isl_basic_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def gist(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).gist(arg1)
+            return Set(arg0).gist(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_gist(isl.isl_basic_set_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def intersect(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).intersect(arg1)
+            return Set(arg0).intersect(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_intersect(isl.isl_basic_set_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def intersect_params(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).intersect_params(arg1)
+            return Set(arg0).intersect_params(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_intersect_params(isl.isl_basic_set_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def is_empty(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -4604,15 +4928,15 @@ class basic_set(set):
         return bool(res)
     def is_equal(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).is_equal(arg1)
+            return Set(arg0).is_equal(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_is_equal(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4620,15 +4944,15 @@ class basic_set(set):
         return bool(res)
     def is_subset(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).is_subset(arg1)
+            return Set(arg0).is_subset(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_is_subset(arg0.ptr, arg1.ptr)
         if res < 0:
@@ -4636,8 +4960,8 @@ class basic_set(set):
         return bool(res)
     def is_wrapping(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -4647,45 +4971,45 @@ class basic_set(set):
         return bool(res)
     def lexmax(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_lexmax(isl.isl_basic_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def lexmin(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_lexmin(isl.isl_basic_set_copy(arg0.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
     def sample(arg0):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_basic_set_sample(isl.isl_basic_set_copy(arg0.ptr))
-        return basic_set(ctx=ctx, ptr=res)
+        return BasicSet(ctx=ctx, ptr=res)
     def union(arg0, arg1):
         try:
-            if not arg0.__class__ is basic_set:
-                arg0 = basic_set(arg0)
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is basic_set:
-                arg1 = basic_set(arg1)
+            if not arg1.__class__ is BasicSet:
+                arg1 = BasicSet(arg1)
         except:
-            return set(arg0).union(arg1)
+            return Set(arg0).union(arg1)
         ctx = arg0.ctx
         res = isl.isl_basic_set_union(isl.isl_basic_set_copy(arg0.ptr), isl.isl_basic_set_copy(arg1.ptr))
-        return set(ctx=ctx, ptr=res)
+        return Set(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_basic_set_read_from_str(a_0, a_1):
@@ -4828,7 +5152,9 @@ def isl_basic_set_copy(a_0):
   return js.globals.Module.ccall('isl_basic_set_copy', retType, argTypes, args)
 isl.isl_basic_set_copy = isl_basic_set_copy
 
-class multi_val:
+basic_set = BasicSet
+
+class MultiVal:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -4843,65 +5169,65 @@ class multi_val:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.multi_val("""%s""")' % s
+            return 'isl.MultiVal("""%s""")' % s
         else:
-            return 'isl.multi_val("%s")' % s
+            return 'isl.MultiVal("%s")' % s
     def add(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_val:
-                arg0 = multi_val(arg0)
+            if not arg0.__class__ is MultiVal:
+                arg0 = MultiVal(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_val:
-                arg1 = multi_val(arg1)
+            if not arg1.__class__ is MultiVal:
+                arg1 = MultiVal(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_val_add(isl.isl_multi_val_copy(arg0.ptr), isl.isl_multi_val_copy(arg1.ptr))
-        return multi_val(ctx=ctx, ptr=res)
+        return MultiVal(ctx=ctx, ptr=res)
     def flat_range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_val:
-                arg0 = multi_val(arg0)
+            if not arg0.__class__ is MultiVal:
+                arg0 = MultiVal(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_val:
-                arg1 = multi_val(arg1)
+            if not arg1.__class__ is MultiVal:
+                arg1 = MultiVal(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_val_flat_range_product(isl.isl_multi_val_copy(arg0.ptr), isl.isl_multi_val_copy(arg1.ptr))
-        return multi_val(ctx=ctx, ptr=res)
+        return MultiVal(ctx=ctx, ptr=res)
     def product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_val:
-                arg0 = multi_val(arg0)
+            if not arg0.__class__ is MultiVal:
+                arg0 = MultiVal(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_val:
-                arg1 = multi_val(arg1)
+            if not arg1.__class__ is MultiVal:
+                arg1 = MultiVal(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_val_product(isl.isl_multi_val_copy(arg0.ptr), isl.isl_multi_val_copy(arg1.ptr))
-        return multi_val(ctx=ctx, ptr=res)
+        return MultiVal(ctx=ctx, ptr=res)
     def range_product(arg0, arg1):
         try:
-            if not arg0.__class__ is multi_val:
-                arg0 = multi_val(arg0)
+            if not arg0.__class__ is MultiVal:
+                arg0 = MultiVal(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is multi_val:
-                arg1 = multi_val(arg1)
+            if not arg1.__class__ is MultiVal:
+                arg1 = MultiVal(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_multi_val_range_product(isl.isl_multi_val_copy(arg0.ptr), isl.isl_multi_val_copy(arg1.ptr))
-        return multi_val(ctx=ctx, ptr=res)
+        return MultiVal(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_multi_val_add(a_0, a_1):
@@ -4953,7 +5279,9 @@ def isl_multi_val_copy(a_0):
   return js.globals.Module.ccall('isl_multi_val_copy', retType, argTypes, args)
 isl.isl_multi_val_copy = isl_multi_val_copy
 
-class point(basic_set):
+multi_val = MultiVal
+
+class Point(BasicSet):
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -4968,9 +5296,9 @@ class point(basic_set):
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.point("""%s""")' % s
+            return 'isl.Point("""%s""")' % s
         else:
-            return 'isl.point("%s")' % s
+            return 'isl.Point("%s")' % s
 
 @staticmethod
 def isl_point_free(a_0):
@@ -4994,7 +5322,9 @@ def isl_point_copy(a_0):
   return js.globals.Module.ccall('isl_point_copy', retType, argTypes, args)
 isl.isl_point_copy = isl_point_copy
 
-class schedule:
+point = Point
+
+class Schedule:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -5013,31 +5343,31 @@ class schedule:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.schedule("""%s""")' % s
+            return 'isl.Schedule("""%s""")' % s
         else:
-            return 'isl.schedule("%s")' % s
+            return 'isl.Schedule("%s")' % s
     def get_map(arg0):
         try:
-            if not arg0.__class__ is schedule:
-                arg0 = schedule(arg0)
+            if not arg0.__class__ is Schedule:
+                arg0 = Schedule(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_get_map(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_root(arg0):
         try:
-            if not arg0.__class__ is schedule:
-                arg0 = schedule(arg0)
+            if not arg0.__class__ is Schedule:
+                arg0 = Schedule(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_get_root(arg0.ptr)
-        return schedule_node(ctx=ctx, ptr=res)
+        return ScheduleNode(ctx=ctx, ptr=res)
     def pullback(arg0, arg1):
-        if arg1.__class__ is union_pw_multi_aff:
+        if arg1.__class__ is UnionPwMultiAff:
             res = isl.isl_schedule_pullback_union_pw_multi_aff(isl.isl_schedule_copy(arg0.ptr), isl.isl_union_pw_multi_aff_copy(arg1.ptr))
-            return schedule(ctx=arg0.ctx, ptr=res)
+            return Schedule(ctx=arg0.ctx, ptr=res)
 
 @staticmethod
 def isl_schedule_read_from_str(a_0, a_1):
@@ -5089,7 +5419,9 @@ def isl_schedule_copy(a_0):
   return js.globals.Module.ccall('isl_schedule_copy', retType, argTypes, args)
 isl.isl_schedule_copy = isl_schedule_copy
 
-class schedule_node:
+schedule = Schedule
+
+class ScheduleNode:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -5104,13 +5436,13 @@ class schedule_node:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.schedule_node("""%s""")' % s
+            return 'isl.ScheduleNode("""%s""")' % s
         else:
-            return 'isl.schedule_node("%s")' % s
+            return 'isl.ScheduleNode("%s")' % s
     def band_member_get_coincident(arg0, arg1):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
@@ -5120,67 +5452,67 @@ class schedule_node:
         return bool(res)
     def band_member_set_coincident(arg0, arg1, arg2):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_band_member_set_coincident(isl.isl_schedule_node_copy(arg0.ptr), arg1, arg2)
-        return schedule_node(ctx=ctx, ptr=res)
+        return ScheduleNode(ctx=ctx, ptr=res)
     def child(arg0, arg1):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_child(isl.isl_schedule_node_copy(arg0.ptr), arg1)
-        return schedule_node(ctx=ctx, ptr=res)
+        return ScheduleNode(ctx=ctx, ptr=res)
     def get_prefix_schedule_multi_union_pw_aff(arg0):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_get_prefix_schedule_multi_union_pw_aff(arg0.ptr)
-        return multi_union_pw_aff(ctx=ctx, ptr=res)
+        return MultiUnionPwAff(ctx=ctx, ptr=res)
     def get_prefix_schedule_union_map(arg0):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_get_prefix_schedule_union_map(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_prefix_schedule_union_pw_multi_aff(arg0):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_get_prefix_schedule_union_pw_multi_aff(arg0.ptr)
-        return union_pw_multi_aff(ctx=ctx, ptr=res)
+        return UnionPwMultiAff(ctx=ctx, ptr=res)
     def get_schedule(arg0):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_get_schedule(arg0.ptr)
-        return schedule(ctx=ctx, ptr=res)
+        return Schedule(ctx=ctx, ptr=res)
     def parent(arg0):
         try:
-            if not arg0.__class__ is schedule_node:
-                arg0 = schedule_node(arg0)
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_schedule_node_parent(isl.isl_schedule_node_copy(arg0.ptr))
-        return schedule_node(ctx=ctx, ptr=res)
+        return ScheduleNode(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_schedule_node_band_member_get_coincident(a_0, a_1):
@@ -5260,13 +5592,15 @@ def isl_schedule_node_copy(a_0):
   return js.globals.Module.ccall('isl_schedule_node_copy', retType, argTypes, args)
 isl.isl_schedule_node_copy = isl_schedule_node_copy
 
-class union_access_info:
+schedule_node = ScheduleNode
+
+class UnionAccessInfo:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
-        if len(args) == 1 and args[0].__class__ is union_map:
+        if len(args) == 1 and args[0].__class__ is UnionMap:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_access_info_from_sink(isl.isl_union_map_copy(args[0].ptr))
             return
@@ -5279,74 +5613,74 @@ class union_access_info:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_access_info("""%s""")' % s
+            return 'isl.UnionAccessInfo("""%s""")' % s
         else:
-            return 'isl.union_access_info("%s")' % s
+            return 'isl.UnionAccessInfo("%s")' % s
     def compute_flow(arg0):
         try:
-            if not arg0.__class__ is union_access_info:
-                arg0 = union_access_info(arg0)
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_access_info_compute_flow(isl.isl_union_access_info_copy(arg0.ptr))
-        return union_flow(ctx=ctx, ptr=res)
+        return UnionFlow(ctx=ctx, ptr=res)
     def set_may_source(arg0, arg1):
         try:
-            if not arg0.__class__ is union_access_info:
-                arg0 = union_access_info(arg0)
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_access_info_set_may_source(isl.isl_union_access_info_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_access_info(ctx=ctx, ptr=res)
+        return UnionAccessInfo(ctx=ctx, ptr=res)
     def set_must_source(arg0, arg1):
         try:
-            if not arg0.__class__ is union_access_info:
-                arg0 = union_access_info(arg0)
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_access_info_set_must_source(isl.isl_union_access_info_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_access_info(ctx=ctx, ptr=res)
+        return UnionAccessInfo(ctx=ctx, ptr=res)
     def set_schedule(arg0, arg1):
         try:
-            if not arg0.__class__ is union_access_info:
-                arg0 = union_access_info(arg0)
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is schedule:
-                arg1 = schedule(arg1)
+            if not arg1.__class__ is Schedule:
+                arg1 = Schedule(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_access_info_set_schedule(isl.isl_union_access_info_copy(arg0.ptr), isl.isl_schedule_copy(arg1.ptr))
-        return union_access_info(ctx=ctx, ptr=res)
+        return UnionAccessInfo(ctx=ctx, ptr=res)
     def set_schedule_map(arg0, arg1):
         try:
-            if not arg0.__class__ is union_access_info:
-                arg0 = union_access_info(arg0)
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
         except:
             raise
         try:
-            if not arg1.__class__ is union_map:
-                arg1 = union_map(arg1)
+            if not arg1.__class__ is UnionMap:
+                arg1 = UnionMap(arg1)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_access_info_set_schedule_map(isl.isl_union_access_info_copy(arg0.ptr), isl.isl_union_map_copy(arg1.ptr))
-        return union_access_info(ctx=ctx, ptr=res)
+        return UnionAccessInfo(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_access_info_from_sink(a_0):
@@ -5412,7 +5746,9 @@ def isl_union_access_info_copy(a_0):
   return js.globals.Module.ccall('isl_union_access_info_copy', retType, argTypes, args)
 isl.isl_union_access_info_copy = isl_union_access_info_copy
 
-class union_flow:
+union_access_info = UnionAccessInfo
+
+class UnionFlow:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -5427,63 +5763,63 @@ class union_flow:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.union_flow("""%s""")' % s
+            return 'isl.UnionFlow("""%s""")' % s
         else:
-            return 'isl.union_flow("%s")' % s
+            return 'isl.UnionFlow("%s")' % s
     def get_full_may_dependence(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_full_may_dependence(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_full_must_dependence(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_full_must_dependence(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_may_dependence(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_may_dependence(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_may_no_source(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_may_no_source(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_must_dependence(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_must_dependence(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
     def get_must_no_source(arg0):
         try:
-            if not arg0.__class__ is union_flow:
-                arg0 = union_flow(arg0)
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
         except:
             raise
         ctx = arg0.ctx
         res = isl.isl_union_flow_get_must_no_source(arg0.ptr)
-        return union_map(ctx=ctx, ptr=res)
+        return UnionMap(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_union_flow_get_full_may_dependence(a_0):
@@ -5549,7 +5885,9 @@ def isl_union_flow_copy(a_0):
   return js.globals.Module.ccall('isl_union_flow_copy', retType, argTypes, args)
 isl.isl_union_flow_copy = isl_union_flow_copy
 
-class val:
+union_flow = UnionFlow
+
+class Val:
     def __init__(self, *args, **keywords):
         if "ptr" in keywords:
             self.ctx = keywords["ctx"]
@@ -5572,39 +5910,483 @@ class val:
     def __repr__(self):
         s = str(self)
         if '"' in s:
-            return 'isl.val("""%s""")' % s
+            return 'isl.Val("""%s""")' % s
         else:
-            return 'isl.val("%s")' % s
+            return 'isl.Val("%s")' % s
+    def abs(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_abs(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def abs_eq(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_abs_eq(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def add(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_add(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def ceil(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_ceil(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def cmp_si(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_cmp_si(arg0.ptr, arg1)
+        return res
+    def div(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_div(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def eq(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_eq(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def floor(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_floor(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def gcd(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_gcd(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def ge(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_ge(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def gt(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_gt(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
     @staticmethod
     def infty():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_infty(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
+    def inv(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_inv(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def is_divisible_by(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_divisible_by(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_infty(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_infty(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_int(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_int(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_nan(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_nan(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_neg(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_neg(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_neginfty(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_neginfty(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_negone(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_negone(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_nonneg(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_nonneg(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_nonpos(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_nonpos(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_one(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_one(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_pos(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_pos(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_rat(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_rat(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def is_zero(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_is_zero(arg0.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def le(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_le(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def lt(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_lt(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def max(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_max(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def min(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_min(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def mod(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_mod(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def mul(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_mul(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
     @staticmethod
     def nan():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_nan(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
+    def ne(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_ne(arg0.ptr, arg1.ptr)
+        if res < 0:
+            raise
+        return bool(res)
+    def neg(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_neg(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
     @staticmethod
     def neginfty():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_neginfty(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
     @staticmethod
     def negone():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_negone(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
     @staticmethod
     def one():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_one(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
+    def sgn(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_sgn(arg0.ptr)
+        return res
+    def sub(arg0, arg1):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        try:
+            if not arg1.__class__ is Val:
+                arg1 = Val(arg1)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_sub(isl.isl_val_copy(arg0.ptr), isl.isl_val_copy(arg1.ptr))
+        return Val(ctx=ctx, ptr=res)
+    def trunc(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_val_trunc(isl.isl_val_copy(arg0.ptr))
+        return Val(ctx=ctx, ptr=res)
     @staticmethod
     def zero():
         ctx = Context.getDefaultInstance()
         res = isl.isl_val_zero(ctx)
-        return val(ctx=ctx, ptr=res)
+        return Val(ctx=ctx, ptr=res)
 
 @staticmethod
 def isl_val_int_from_si(a_0, a_1):
@@ -5621,6 +6403,83 @@ def isl_val_read_from_str(a_0, a_1):
   return js.globals.Module.ccall('isl_val_read_from_str', retType, argTypes, args)
 isl.isl_val_read_from_str = isl_val_read_from_str
 @staticmethod
+def isl_val_abs(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_abs', retType, argTypes, args)
+isl.isl_val_abs = isl_val_abs
+@staticmethod
+def isl_val_abs_eq(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_abs_eq', retType, argTypes, args)
+isl.isl_val_abs_eq = isl_val_abs_eq
+@staticmethod
+def isl_val_add(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_add', retType, argTypes, args)
+isl.isl_val_add = isl_val_add
+@staticmethod
+def isl_val_ceil(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_ceil', retType, argTypes, args)
+isl.isl_val_ceil = isl_val_ceil
+@staticmethod
+def isl_val_cmp_si(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_cmp_si', retType, argTypes, args)
+isl.isl_val_cmp_si = isl_val_cmp_si
+@staticmethod
+def isl_val_div(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_div', retType, argTypes, args)
+isl.isl_val_div = isl_val_div
+@staticmethod
+def isl_val_eq(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_eq', retType, argTypes, args)
+isl.isl_val_eq = isl_val_eq
+@staticmethod
+def isl_val_floor(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_floor', retType, argTypes, args)
+isl.isl_val_floor = isl_val_floor
+@staticmethod
+def isl_val_gcd(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_gcd', retType, argTypes, args)
+isl.isl_val_gcd = isl_val_gcd
+@staticmethod
+def isl_val_ge(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_ge', retType, argTypes, args)
+isl.isl_val_ge = isl_val_ge
+@staticmethod
+def isl_val_gt(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_gt', retType, argTypes, args)
+isl.isl_val_gt = isl_val_gt
+@staticmethod
 def isl_val_infty(a_0):
   retType = 'number'
   argTypes = ['number']
@@ -5628,12 +6487,166 @@ def isl_val_infty(a_0):
   return js.globals.Module.ccall('isl_val_infty', retType, argTypes, args)
 isl.isl_val_infty = isl_val_infty
 @staticmethod
+def isl_val_inv(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_inv', retType, argTypes, args)
+isl.isl_val_inv = isl_val_inv
+@staticmethod
+def isl_val_is_divisible_by(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_is_divisible_by', retType, argTypes, args)
+isl.isl_val_is_divisible_by = isl_val_is_divisible_by
+@staticmethod
+def isl_val_is_infty(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_infty', retType, argTypes, args)
+isl.isl_val_is_infty = isl_val_is_infty
+@staticmethod
+def isl_val_is_int(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_int', retType, argTypes, args)
+isl.isl_val_is_int = isl_val_is_int
+@staticmethod
+def isl_val_is_nan(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_nan', retType, argTypes, args)
+isl.isl_val_is_nan = isl_val_is_nan
+@staticmethod
+def isl_val_is_neg(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_neg', retType, argTypes, args)
+isl.isl_val_is_neg = isl_val_is_neg
+@staticmethod
+def isl_val_is_neginfty(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_neginfty', retType, argTypes, args)
+isl.isl_val_is_neginfty = isl_val_is_neginfty
+@staticmethod
+def isl_val_is_negone(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_negone', retType, argTypes, args)
+isl.isl_val_is_negone = isl_val_is_negone
+@staticmethod
+def isl_val_is_nonneg(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_nonneg', retType, argTypes, args)
+isl.isl_val_is_nonneg = isl_val_is_nonneg
+@staticmethod
+def isl_val_is_nonpos(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_nonpos', retType, argTypes, args)
+isl.isl_val_is_nonpos = isl_val_is_nonpos
+@staticmethod
+def isl_val_is_one(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_one', retType, argTypes, args)
+isl.isl_val_is_one = isl_val_is_one
+@staticmethod
+def isl_val_is_pos(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_pos', retType, argTypes, args)
+isl.isl_val_is_pos = isl_val_is_pos
+@staticmethod
+def isl_val_is_rat(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_rat', retType, argTypes, args)
+isl.isl_val_is_rat = isl_val_is_rat
+@staticmethod
+def isl_val_is_zero(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_is_zero', retType, argTypes, args)
+isl.isl_val_is_zero = isl_val_is_zero
+@staticmethod
+def isl_val_le(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_le', retType, argTypes, args)
+isl.isl_val_le = isl_val_le
+@staticmethod
+def isl_val_lt(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_lt', retType, argTypes, args)
+isl.isl_val_lt = isl_val_lt
+@staticmethod
+def isl_val_max(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_max', retType, argTypes, args)
+isl.isl_val_max = isl_val_max
+@staticmethod
+def isl_val_min(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_min', retType, argTypes, args)
+isl.isl_val_min = isl_val_min
+@staticmethod
+def isl_val_mod(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_mod', retType, argTypes, args)
+isl.isl_val_mod = isl_val_mod
+@staticmethod
+def isl_val_mul(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_mul', retType, argTypes, args)
+isl.isl_val_mul = isl_val_mul
+@staticmethod
 def isl_val_nan(a_0):
   retType = 'number'
   argTypes = ['number']
   args = [a_0.ptr]
   return js.globals.Module.ccall('isl_val_nan', retType, argTypes, args)
 isl.isl_val_nan = isl_val_nan
+@staticmethod
+def isl_val_ne(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_ne', retType, argTypes, args)
+isl.isl_val_ne = isl_val_ne
+@staticmethod
+def isl_val_neg(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_neg', retType, argTypes, args)
+isl.isl_val_neg = isl_val_neg
 @staticmethod
 def isl_val_neginfty(a_0):
   retType = 'number'
@@ -5655,6 +6668,27 @@ def isl_val_one(a_0):
   args = [a_0.ptr]
   return js.globals.Module.ccall('isl_val_one', retType, argTypes, args)
 isl.isl_val_one = isl_val_one
+@staticmethod
+def isl_val_sgn(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_sgn', retType, argTypes, args)
+isl.isl_val_sgn = isl_val_sgn
+@staticmethod
+def isl_val_sub(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'number']
+  args = [a_0, a_1]
+  return js.globals.Module.ccall('isl_val_sub', retType, argTypes, args)
+isl.isl_val_sub = isl_val_sub
+@staticmethod
+def isl_val_trunc(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_trunc', retType, argTypes, args)
+isl.isl_val_trunc = isl_val_trunc
 @staticmethod
 def isl_val_zero(a_0):
   retType = 'number'
@@ -5683,3 +6717,5 @@ def isl_val_copy(a_0):
   args = [a_0]
   return js.globals.Module.ccall('isl_val_copy', retType, argTypes, args)
 isl.isl_val_copy = isl_val_copy
+
+val = Val
