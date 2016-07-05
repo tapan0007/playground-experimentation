@@ -85,7 +85,8 @@ href="http://pypyjs.org">PyPy.js</a>.
         vm.stdout('domain = Set("{[i,j]: 0 < i, j < 100}")\n')
         vm.stdout('schedule = Map("{[i, j] -> [floor(i/8), floor(j/8), i, j]}")\n')
         vm.stdout('schedule = schedule.intersect_domain(domain)\n')
-        vm.stdout('AstBuild().node_from_schedule_map(schedule)\n')
+	vm.stdout('node = AstBuild().node_from_schedule_map(schedule)\n')
+	vm.stdout('print(node.to_C_str())\n')
 
 	var islpy = "";
 
