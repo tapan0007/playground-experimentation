@@ -31,7 +31,8 @@ class Context:
 
 class isl:
     def __init__(self):
-	self.foo = True
+       self.foo = True
+
 
 class UnionPwMultiAff:
     def __init__(self, *args, **keywords):
@@ -55,8 +56,15 @@ class UnionPwMultiAff:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_pw_multi_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_pw_multi_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionPwMultiAff:
+                arg0 = UnionPwMultiAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_pw_multi_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -161,10 +169,10 @@ def isl_union_pw_multi_aff_union_add(a_0, a_1):
 isl.isl_union_pw_multi_aff_union_add = isl_union_pw_multi_aff_union_add
 @staticmethod
 def isl_union_pw_multi_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_pw_multi_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_pw_multi_aff_free', retType, argTypes, args)
 isl.isl_union_pw_multi_aff_free = isl_union_pw_multi_aff_free
 @staticmethod
 def isl_union_pw_multi_aff_to_str(a_0):
@@ -205,8 +213,15 @@ class MultiUnionPwAff:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_multi_union_pw_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_multi_union_pw_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is MultiUnionPwAff:
+                arg0 = MultiUnionPwAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_multi_union_pw_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -332,10 +347,10 @@ def isl_multi_union_pw_aff_union_add(a_0, a_1):
 isl.isl_multi_union_pw_aff_union_add = isl_multi_union_pw_aff_union_add
 @staticmethod
 def isl_multi_union_pw_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_multi_union_pw_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_multi_union_pw_aff_free', retType, argTypes, args)
 isl.isl_multi_union_pw_aff_free = isl_multi_union_pw_aff_free
 @staticmethod
 def isl_multi_union_pw_aff_to_str(a_0):
@@ -372,8 +387,15 @@ class UnionPwAff(UnionPwMultiAff, MultiUnionPwAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_pw_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_pw_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionPwAff:
+                arg0 = UnionPwAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_pw_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -450,10 +472,10 @@ def isl_union_pw_aff_union_add(a_0, a_1):
 isl.isl_union_pw_aff_union_add = isl_union_pw_aff_union_add
 @staticmethod
 def isl_union_pw_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_pw_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_pw_aff_free', retType, argTypes, args)
 isl.isl_union_pw_aff_free = isl_union_pw_aff_free
 @staticmethod
 def isl_union_pw_aff_to_str(a_0):
@@ -498,8 +520,15 @@ class MultiPwAff(MultiUnionPwAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_multi_pw_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_multi_pw_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is MultiPwAff:
+                arg0 = MultiPwAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_multi_pw_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -652,10 +681,10 @@ def isl_multi_pw_aff_range_product(a_0, a_1):
 isl.isl_multi_pw_aff_range_product = isl_multi_pw_aff_range_product
 @staticmethod
 def isl_multi_pw_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_multi_pw_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_multi_pw_aff_free', retType, argTypes, args)
 isl.isl_multi_pw_aff_free = isl_multi_pw_aff_free
 @staticmethod
 def isl_multi_pw_aff_to_str(a_0):
@@ -696,8 +725,15 @@ class PwMultiAff(MultiPwAff, UnionPwMultiAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_pw_multi_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_pw_multi_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is PwMultiAff:
+                arg0 = PwMultiAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_pw_multi_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -854,10 +890,10 @@ def isl_pw_multi_aff_union_add(a_0, a_1):
 isl.isl_pw_multi_aff_union_add = isl_pw_multi_aff_union_add
 @staticmethod
 def isl_pw_multi_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_pw_multi_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_pw_multi_aff_free', retType, argTypes, args)
 isl.isl_pw_multi_aff_free = isl_pw_multi_aff_free
 @staticmethod
 def isl_pw_multi_aff_to_str(a_0):
@@ -894,8 +930,15 @@ class PwAff(UnionPwAff, MultiPwAff, PwMultiAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_pw_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_pw_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is PwAff:
+                arg0 = PwAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_pw_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -992,10 +1035,10 @@ def isl_pw_aff_union_add(a_0, a_1):
 isl.isl_pw_aff_union_add = isl_pw_aff_union_add
 @staticmethod
 def isl_pw_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_pw_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_pw_aff_free', retType, argTypes, args)
 isl.isl_pw_aff_free = isl_pw_aff_free
 @staticmethod
 def isl_pw_aff_to_str(a_0):
@@ -1032,8 +1075,15 @@ class MultiAff(MultiPwAff, PwMultiAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_multi_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_multi_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is MultiAff:
+                arg0 = MultiAff(arg0)
+        except:
+            raise
+        ptr = isl.isl_multi_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -1152,10 +1202,10 @@ def isl_multi_aff_range_product(a_0, a_1):
 isl.isl_multi_aff_range_product = isl_multi_aff_range_product
 @staticmethod
 def isl_multi_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_multi_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_multi_aff_free', retType, argTypes, args)
 isl.isl_multi_aff_free = isl_multi_aff_free
 @staticmethod
 def isl_multi_aff_to_str(a_0):
@@ -1188,8 +1238,15 @@ class Aff(PwAff, MultiAff):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_aff_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_aff_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Aff:
+                arg0 = Aff(arg0)
+        except:
+            raise
+        ptr = isl.isl_aff_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -1238,10 +1295,10 @@ def isl_aff_pullback_multi_aff(a_0, a_1):
 isl.isl_aff_pullback_multi_aff = isl_aff_pullback_multi_aff
 @staticmethod
 def isl_aff_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_aff_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_aff_free', retType, argTypes, args)
 isl.isl_aff_free = isl_aff_free
 @staticmethod
 def isl_aff_to_str(a_0):
@@ -1270,22 +1327,10 @@ class AstBuild:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_ast_build_alloc(self.ctx)
             return
-        if len(args) == 1 and args[0].__class__ is Set:
-            self.ctx = Context.getDefaultInstance()
-            self.ptr = isl.isl_ast_build_from_context(isl.isl_set_copy(args[0].ptr))
-            return
         raise Error
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_ast_build_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_ast_build_to_str(self.ptr))
-    def __repr__(self):
-        s = str(self)
-        if '"' in s:
-            return 'isl.AstBuild("""%s""")' % s
-        else:
-            return 'isl.AstBuild("%s")' % s
     def access_from_multi_pw_aff(arg0, arg1):
         try:
             if not arg0.__class__ is AstBuild:
@@ -1370,6 +1415,16 @@ class AstBuild:
         ctx = arg0.ctx
         res = isl.isl_ast_build_expr_from_set(arg0.ptr, isl.isl_set_copy(arg1.ptr))
         return AstExpr(ctx=ctx, ptr=res)
+    @staticmethod
+    def from_context(arg0):
+        try:
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_build_from_context(isl.isl_set_copy(arg0.ptr))
+        return AstBuild(ctx=ctx, ptr=res)
     def node_from_schedule_map(arg0, arg1):
         try:
             if not arg0.__class__ is AstBuild:
@@ -1392,13 +1447,6 @@ def isl_ast_build_alloc(a_0):
   args = [a_0.ptr]
   return js.globals.Module.ccall('isl_ast_build_alloc', retType, argTypes, args)
 isl.isl_ast_build_alloc = isl_ast_build_alloc
-@staticmethod
-def isl_ast_build_from_context(a_0):
-  retType = 'number'
-  argTypes = ['number']
-  args = [a_0]
-  return js.globals.Module.ccall('isl_ast_build_from_context', retType, argTypes, args)
-isl.isl_ast_build_from_context = isl_ast_build_from_context
 @staticmethod
 def isl_ast_build_access_from_multi_pw_aff(a_0, a_1):
   retType = 'number'
@@ -1442,6 +1490,13 @@ def isl_ast_build_expr_from_set(a_0, a_1):
   return js.globals.Module.ccall('isl_ast_build_expr_from_set', retType, argTypes, args)
 isl.isl_ast_build_expr_from_set = isl_ast_build_expr_from_set
 @staticmethod
+def isl_ast_build_from_context(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_build_from_context', retType, argTypes, args)
+isl.isl_ast_build_from_context = isl_ast_build_from_context
+@staticmethod
 def isl_ast_build_node_from_schedule_map(a_0, a_1):
   retType = 'number'
   argTypes = ['number', 'number']
@@ -1450,18 +1505,11 @@ def isl_ast_build_node_from_schedule_map(a_0, a_1):
 isl.isl_ast_build_node_from_schedule_map = isl_ast_build_node_from_schedule_map
 @staticmethod
 def isl_ast_build_free(a_0):
-  retType = None
-  argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_ast_build_free', retType, argTypes, args)
-isl.isl_ast_build_free = isl_ast_build_free
-@staticmethod
-def isl_ast_build_to_str(a_0):
-  retType = 'string'
+  retType = 'number'
   argTypes = ['number']
   args = [a_0]
-  return js.globals.Module.ccall('isl_ast_build_to_str', retType, argTypes, args)
-isl.isl_ast_build_to_str = isl_ast_build_to_str
+  return js.globals.Module.ccall('isl_ast_build_free', retType, argTypes, args)
+isl.isl_ast_build_free = isl_ast_build_free
 @staticmethod
 def isl_ast_build_copy(a_0):
   retType = 'number'
@@ -1482,21 +1530,47 @@ class AstExpr:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_ast_expr_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_ast_expr_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is AstExpr:
+                arg0 = AstExpr(arg0)
+        except:
+            raise
+        ptr = isl.isl_ast_expr_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
             return 'isl.AstExpr("""%s""")' % s
         else:
             return 'isl.AstExpr("%s")' % s
+    def to_C_str(arg0):
+        try:
+            if not arg0.__class__ is AstExpr:
+                arg0 = AstExpr(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_expr_to_C_str(arg0.ptr)
+        if res == 0:
+            raise
+        string = str(res)
+        return string
 
 @staticmethod
-def isl_ast_expr_free(a_0):
-  retType = None
+def isl_ast_expr_to_C_str(a_0):
+  retType = 'string'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_ast_expr_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_expr_to_C_str', retType, argTypes, args)
+isl.isl_ast_expr_to_C_str = isl_ast_expr_to_C_str
+@staticmethod
+def isl_ast_expr_free(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_expr_free', retType, argTypes, args)
 isl.isl_ast_expr_free = isl_ast_expr_free
 @staticmethod
 def isl_ast_expr_to_str(a_0):
@@ -1525,21 +1599,47 @@ class AstNode:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_ast_node_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_ast_node_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is AstNode:
+                arg0 = AstNode(arg0)
+        except:
+            raise
+        ptr = isl.isl_ast_node_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
             return 'isl.AstNode("""%s""")' % s
         else:
             return 'isl.AstNode("%s")' % s
+    def to_C_str(arg0):
+        try:
+            if not arg0.__class__ is AstNode:
+                arg0 = AstNode(arg0)
+        except:
+            raise
+        ctx = arg0.ctx
+        res = isl.isl_ast_node_to_C_str(arg0.ptr)
+        if res == 0:
+            raise
+        string = str(res)
+        return string
 
 @staticmethod
-def isl_ast_node_free(a_0):
-  retType = None
+def isl_ast_node_to_C_str(a_0):
+  retType = 'string'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_ast_node_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_node_to_C_str', retType, argTypes, args)
+isl.isl_ast_node_to_C_str = isl_ast_node_to_C_str
+@staticmethod
+def isl_ast_node_free(a_0):
+  retType = 'number'
+  argTypes = ['number']
+  args = [a_0]
+  return js.globals.Module.ccall('isl_ast_node_free', retType, argTypes, args)
 isl.isl_ast_node_free = isl_ast_node_free
 @staticmethod
 def isl_ast_node_to_str(a_0):
@@ -1564,6 +1664,10 @@ class UnionMap:
             self.ctx = keywords["ctx"]
             self.ptr = keywords["ptr"]
             return
+        if len(args) == 1 and type(args[0]) == str:
+            self.ctx = Context.getDefaultInstance()
+            self.ptr = isl.isl_union_map_read_from_str(self.ctx, args[0])
+            return
         if len(args) == 1 and args[0].__class__ is BasicMap:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_map_from_basic_map(isl.isl_basic_map_copy(args[0].ptr))
@@ -1572,16 +1676,19 @@ class UnionMap:
             self.ctx = Context.getDefaultInstance()
             self.ptr = isl.isl_union_map_from_map(isl.isl_map_copy(args[0].ptr))
             return
-        if len(args) == 1 and type(args[0]) == str:
-            self.ctx = Context.getDefaultInstance()
-            self.ptr = isl.isl_union_map_read_from_str(self.ctx, args[0])
-            return
         raise Error
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_map_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_map_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionMap:
+                arg0 = UnionMap(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_map_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -2168,6 +2275,13 @@ class UnionMap:
         return UnionMap(ctx=ctx, ptr=res)
 
 @staticmethod
+def isl_union_map_read_from_str(a_0, a_1):
+  retType = 'number'
+  argTypes = ['number', 'string']
+  args = [a_0.ptr, a_1]
+  return js.globals.Module.ccall('isl_union_map_read_from_str', retType, argTypes, args)
+isl.isl_union_map_read_from_str = isl_union_map_read_from_str
+@staticmethod
 def isl_union_map_from_basic_map(a_0):
   retType = 'number'
   argTypes = ['number']
@@ -2181,13 +2295,6 @@ def isl_union_map_from_map(a_0):
   args = [a_0]
   return js.globals.Module.ccall('isl_union_map_from_map', retType, argTypes, args)
 isl.isl_union_map_from_map = isl_union_map_from_map
-@staticmethod
-def isl_union_map_read_from_str(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'string']
-  args = [a_0.ptr, a_1]
-  return js.globals.Module.ccall('isl_union_map_read_from_str', retType, argTypes, args)
-isl.isl_union_map_read_from_str = isl_union_map_read_from_str
 @staticmethod
 def isl_union_map_affine_hull(a_0):
   retType = 'number'
@@ -2302,8 +2409,8 @@ def isl_union_map_fixed_power_val(a_0, a_1):
 isl.isl_union_map_fixed_power_val = isl_union_map_fixed_power_val
 @staticmethod
 def isl_union_map_foreach_map(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'number']
+  retType = ''
+  argTypes = ['number', 'number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_union_map_foreach_map', retType, argTypes, args)
 isl.isl_union_map_foreach_map = isl_union_map_foreach_map
@@ -2547,10 +2654,10 @@ def isl_union_map_zip(a_0):
 isl.isl_union_map_zip = isl_union_map_zip
 @staticmethod
 def isl_union_map_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_map_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_map_free', retType, argTypes, args)
 isl.isl_union_map_free = isl_union_map_free
 @staticmethod
 def isl_union_map_to_str(a_0):
@@ -2587,8 +2694,15 @@ class Map(UnionMap):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_map_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_map_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Map:
+                arg0 = Map(arg0)
+        except:
+            raise
+        ptr = isl.isl_map_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -3079,8 +3193,8 @@ def isl_map_flatten_range(a_0):
 isl.isl_map_flatten_range = isl_map_flatten_range
 @staticmethod
 def isl_map_foreach_basic_map(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'number']
+  retType = ''
+  argTypes = ['number', 'number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_map_foreach_basic_map', retType, argTypes, args)
 isl.isl_map_foreach_basic_map = isl_map_foreach_basic_map
@@ -3240,10 +3354,10 @@ def isl_map_unshifted_simple_hull(a_0):
 isl.isl_map_unshifted_simple_hull = isl_map_unshifted_simple_hull
 @staticmethod
 def isl_map_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_map_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_map_free', retType, argTypes, args)
 isl.isl_map_free = isl_map_free
 @staticmethod
 def isl_map_to_str(a_0):
@@ -3276,8 +3390,15 @@ class BasicMap(Map):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_basic_map_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_basic_map_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is BasicMap:
+                arg0 = BasicMap(arg0)
+        except:
+            raise
+        ptr = isl.isl_basic_map_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -3665,10 +3786,10 @@ def isl_basic_map_union(a_0, a_1):
 isl.isl_basic_map_union = isl_basic_map_union
 @staticmethod
 def isl_basic_map_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_basic_map_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_basic_map_free', retType, argTypes, args)
 isl.isl_basic_map_free = isl_basic_map_free
 @staticmethod
 def isl_basic_map_to_str(a_0):
@@ -3713,8 +3834,15 @@ class UnionSet:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_set_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_set_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionSet:
+                arg0 = UnionSet(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_set_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -4080,15 +4208,15 @@ def isl_union_set_detect_equalities(a_0):
 isl.isl_union_set_detect_equalities = isl_union_set_detect_equalities
 @staticmethod
 def isl_union_set_foreach_point(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'number']
+  retType = ''
+  argTypes = ['number', 'number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_union_set_foreach_point', retType, argTypes, args)
 isl.isl_union_set_foreach_point = isl_union_set_foreach_point
 @staticmethod
 def isl_union_set_foreach_set(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'number']
+  retType = ''
+  argTypes = ['number', 'number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_union_set_foreach_set', retType, argTypes, args)
 isl.isl_union_set_foreach_set = isl_union_set_foreach_set
@@ -4206,10 +4334,10 @@ def isl_union_set_unwrap(a_0):
 isl.isl_union_set_unwrap = isl_union_set_unwrap
 @staticmethod
 def isl_union_set_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_set_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_set_free', retType, argTypes, args)
 isl.isl_union_set_free = isl_union_set_free
 @staticmethod
 def isl_union_set_to_str(a_0):
@@ -4250,8 +4378,15 @@ class Set(UnionSet):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_set_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_set_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Set:
+                arg0 = Set(arg0)
+        except:
+            raise
+        ptr = isl.isl_set_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -4644,8 +4779,8 @@ def isl_set_flatten(a_0):
 isl.isl_set_flatten = isl_set_flatten
 @staticmethod
 def isl_set_foreach_basic_set(a_0, a_1):
-  retType = 'number'
-  argTypes = ['number', 'number']
+  retType = ''
+  argTypes = ['number', 'number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_set_foreach_basic_set', retType, argTypes, args)
 isl.isl_set_foreach_basic_set = isl_set_foreach_basic_set
@@ -4784,10 +4919,10 @@ def isl_set_unshifted_simple_hull(a_0):
 isl.isl_set_unshifted_simple_hull = isl_set_unshifted_simple_hull
 @staticmethod
 def isl_set_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_set_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_set_free', retType, argTypes, args)
 isl.isl_set_free = isl_set_free
 @staticmethod
 def isl_set_to_str(a_0):
@@ -4824,8 +4959,15 @@ class BasicSet(Set):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_basic_set_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_basic_set_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is BasicSet:
+                arg0 = BasicSet(arg0)
+        except:
+            raise
+        ptr = isl.isl_basic_set_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5132,10 +5274,10 @@ def isl_basic_set_union(a_0, a_1):
 isl.isl_basic_set_union = isl_basic_set_union
 @staticmethod
 def isl_basic_set_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_basic_set_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_basic_set_free', retType, argTypes, args)
 isl.isl_basic_set_free = isl_basic_set_free
 @staticmethod
 def isl_basic_set_to_str(a_0):
@@ -5164,8 +5306,15 @@ class MultiVal:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_multi_val_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_multi_val_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is MultiVal:
+                arg0 = MultiVal(arg0)
+        except:
+            raise
+        ptr = isl.isl_multi_val_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5259,10 +5408,10 @@ def isl_multi_val_range_product(a_0, a_1):
 isl.isl_multi_val_range_product = isl_multi_val_range_product
 @staticmethod
 def isl_multi_val_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_multi_val_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_multi_val_free', retType, argTypes, args)
 isl.isl_multi_val_free = isl_multi_val_free
 @staticmethod
 def isl_multi_val_to_str(a_0):
@@ -5291,8 +5440,15 @@ class Point(BasicSet):
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_point_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_point_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Point:
+                arg0 = Point(arg0)
+        except:
+            raise
+        ptr = isl.isl_point_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5302,10 +5458,10 @@ class Point(BasicSet):
 
 @staticmethod
 def isl_point_free(a_0):
-  retType = None
+  retType = ''
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_point_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_point_free', retType, argTypes, args)
 isl.isl_point_free = isl_point_free
 @staticmethod
 def isl_point_to_str(a_0):
@@ -5338,8 +5494,15 @@ class Schedule:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_schedule_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_schedule_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Schedule:
+                arg0 = Schedule(arg0)
+        except:
+            raise
+        ptr = isl.isl_schedule_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5399,10 +5562,10 @@ def isl_schedule_pullback_union_pw_multi_aff(a_0, a_1):
 isl.isl_schedule_pullback_union_pw_multi_aff = isl_schedule_pullback_union_pw_multi_aff
 @staticmethod
 def isl_schedule_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_schedule_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_schedule_free', retType, argTypes, args)
 isl.isl_schedule_free = isl_schedule_free
 @staticmethod
 def isl_schedule_to_str(a_0):
@@ -5431,8 +5594,15 @@ class ScheduleNode:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_schedule_node_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_schedule_node_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is ScheduleNode:
+                arg0 = ScheduleNode(arg0)
+        except:
+            raise
+        ptr = isl.isl_schedule_node_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5572,10 +5742,10 @@ def isl_schedule_node_parent(a_0):
 isl.isl_schedule_node_parent = isl_schedule_node_parent
 @staticmethod
 def isl_schedule_node_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_schedule_node_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_schedule_node_free', retType, argTypes, args)
 isl.isl_schedule_node_free = isl_schedule_node_free
 @staticmethod
 def isl_schedule_node_to_str(a_0):
@@ -5608,8 +5778,15 @@ class UnionAccessInfo:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_access_info_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_access_info_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionAccessInfo:
+                arg0 = UnionAccessInfo(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_access_info_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5726,10 +5903,10 @@ def isl_union_access_info_set_schedule_map(a_0, a_1):
 isl.isl_union_access_info_set_schedule_map = isl_union_access_info_set_schedule_map
 @staticmethod
 def isl_union_access_info_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_access_info_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_access_info_free', retType, argTypes, args)
 isl.isl_union_access_info_free = isl_union_access_info_free
 @staticmethod
 def isl_union_access_info_to_str(a_0):
@@ -5758,8 +5935,15 @@ class UnionFlow:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_union_flow_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_union_flow_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is UnionFlow:
+                arg0 = UnionFlow(arg0)
+        except:
+            raise
+        ptr = isl.isl_union_flow_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -5865,10 +6049,10 @@ def isl_union_flow_get_must_no_source(a_0):
 isl.isl_union_flow_get_must_no_source = isl_union_flow_get_must_no_source
 @staticmethod
 def isl_union_flow_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_union_flow_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_union_flow_free', retType, argTypes, args)
 isl.isl_union_flow_free = isl_union_flow_free
 @staticmethod
 def isl_union_flow_to_str(a_0):
@@ -5877,13 +6061,6 @@ def isl_union_flow_to_str(a_0):
   args = [a_0]
   return js.globals.Module.ccall('isl_union_flow_to_str', retType, argTypes, args)
 isl.isl_union_flow_to_str = isl_union_flow_to_str
-@staticmethod
-def isl_union_flow_copy(a_0):
-  retType = 'number'
-  argTypes = ['number']
-  args = [a_0]
-  return js.globals.Module.ccall('isl_union_flow_copy', retType, argTypes, args)
-isl.isl_union_flow_copy = isl_union_flow_copy
 
 union_flow = UnionFlow
 
@@ -5905,8 +6082,15 @@ class Val:
     def __del__(self):
         if hasattr(self, 'ptr'):
             isl.isl_val_free(self.ptr)
-    def __str__(self):
-        return str(isl.isl_val_to_str(self.ptr))
+    def __str__(arg0):
+        try:
+            if not arg0.__class__ is Val:
+                arg0 = Val(arg0)
+        except:
+            raise
+        ptr = isl.isl_val_to_str(arg0.ptr)
+        res = str(ptr)
+        return res
     def __repr__(self):
         s = str(self)
         if '"' in s:
@@ -6432,7 +6616,7 @@ def isl_val_ceil(a_0):
 isl.isl_val_ceil = isl_val_ceil
 @staticmethod
 def isl_val_cmp_si(a_0, a_1):
-  retType = 'number'
+  retType = ''
   argTypes = ['number', 'number']
   args = [a_0, a_1]
   return js.globals.Module.ccall('isl_val_cmp_si', retType, argTypes, args)
@@ -6670,7 +6854,7 @@ def isl_val_one(a_0):
 isl.isl_val_one = isl_val_one
 @staticmethod
 def isl_val_sgn(a_0):
-  retType = 'number'
+  retType = ''
   argTypes = ['number']
   args = [a_0]
   return js.globals.Module.ccall('isl_val_sgn', retType, argTypes, args)
@@ -6698,10 +6882,10 @@ def isl_val_zero(a_0):
 isl.isl_val_zero = isl_val_zero
 @staticmethod
 def isl_val_free(a_0):
-  retType = None
+  retType = 'number'
   argTypes = ['number']
-  args = [a_0.ptr]
-  js.globals.Module.ccall('isl_val_free', retType, argTypes, args)
+  args = [a_0]
+  return js.globals.Module.ccall('isl_val_free', retType, argTypes, args)
 isl.isl_val_free = isl_val_free
 @staticmethod
 def isl_val_to_str(a_0):
