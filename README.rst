@@ -1,3 +1,9 @@
+The polyhedral playground for this repo should be available at:
+
+https://polyhedral-tutorials.gitlab.io/polyhedral-playground
+
+Unfortunately it does not yet seem to work.
+
 
 PyPy.js website
 ===============
