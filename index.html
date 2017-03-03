@@ -14,7 +14,6 @@
   <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
   <link href='css/ansi.css' rel='stylesheet' type='text/css'>
-  <link href='css/console.css' rel='stylesheet' type='text/css'>
   <link href='css/pypyjs.css' rel='stylesheet' type='text/css'>
   <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -48,7 +47,17 @@
     <p>&nbsp;</p>
 
     <noscript><h3>Please enable JavaScript for using PyPy.js</h3></noscript>
-    <div id="console"></div>
+
+    <div id="pt-ui">
+      <div id="pt-wait">Please wait until PyPy.js is loaded.  It is huge, so it may take a while...</div>
+<!--
+      <div>
+        <input type="text" id="pt-input"></input>
+        <button id="pt-run-button">run!</button>
+      </div>
+-->
+    </div>
+
   </div>
   <div class='container' style="height: 320px">
   </div>
@@ -83,71 +92,75 @@ documentation of the AST generation functionality.
   <script src="pypyjs-release/lib/pypy.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-migrate-1.2.1.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/jqconsole.min.js" type="text/javascript" charset="utf-8"></script>
+
+  <script>
+    function pt_appendInput() {
+      let ui = document.getElementById("pt-ui");
+      let currentInputElement = document.getElementById("pt-input");
+      let newInputElement = document.createElement("input")
+      let runButtonElement = document.getElementById("pt-run-button");
+
+      if (currentInputElement) {
+        currentInputElement.removeAttribute("id");
+        currentInputElement.readOnly = true;
+        ui.removeChild(runButtonElement);
+      } else {
+        runButtonElement = document.createElement("button");
+        runButtonElement.setAttribute("id", "pt-run-button");
+        runButtonElement.setAttribute("onclick", "pt_processInput()");
+        runButtonElement.innerHTML = "Run!";
+      }
+
+      newInputElement.setAttribute("type", "text");
+      newInputElement.setAttribute("id", "pt-input");
+      newInputElement.style.width = "80%";
+      ui.appendChild(newInputElement);
+      ui.appendChild(runButtonElement);
+      newInputElement.focus();
+    }
+
+    function pt_appendOutput(code) {
+      let ui = document.getElementById("pt-ui");
+      let outputElement = document.createElement("div");
+
+      outputElement.innerHTML = code;
+      ui.appendChild(outputElement);
+    }
+
+    function pt_processInput() {
+      let currentInputElement = document.getElementById("pt-input");
+      vm.exec(currentInputElement.value).then(pt_appendInput);
+    }
+  </script>
+
   <script>
     $(function () {
-      // Global vars, for easy debugging in console.
-      window.jqconsole = $('#console').jqconsole('', '>>> ');
-      window.vm = new PyPyJS();
-      // Send all VM output to the console.
-      vm.stdout = vm.stderr = function(data) {
-        jqconsole.Write(data, 'jqconsole-output');
-      }
-      // Display a helpful message and twiddle thumbs as it loads.
-      vm.stdout("Loading PyPy.js and islpy.\n\n");
-      vm.stdout('It\'s big, so this might take a while...');
-      var pseudo_status = setInterval(function(){ vm.stdout("."); }, 500);
-      vm.ready.then(function() {
-        clearInterval(pseudo_status);
-        jqconsole.Reset();
-        vm.stdout('Polly Labs presents isl python in the browser!\n\n')
-        vm.stdout('Try:\n')
-        vm.stdout('domain = Set("{S[i,j]: 0 < i, j < 100}")\n')
-        vm.stdout('schedule = Map("{S[i, j] -> [floor(i/8), floor(j/8), i, j]}")\n')
-        vm.stdout('schedule = schedule.intersect_domain(domain)\n')
-	vm.stdout('node = AstBuild().node_from_schedule_map(schedule)\n')
-	vm.stdout('print(node.to_C_str())\n')
+        window.vm = new PyPyJS();
+        vm.stdout = vm.stderr = pt_appendOutput;
+        var pseudoStatus = setInterval(function() {
+            let waitElement = document.getElementById("pt-wait");
+            waitElement.innerHTML += ".";
+        }, 500);
+        vm.ready.then(function() {
+          clearInterval(pseudoStatus);
+          let ui = document.getElementById("pt-ui");
+          let waitElement = document.getElementById("pt-wait");
+          ui.removeChild(waitElement);
 
-	var islpy = "";
-
-	$.ajax({
-    		url: 'isl.txt',
-		type: 'get',
-		async: false,
-		success: function(html) {
-			islpy = String(html);
-    		}
-	});
-
-	vm.exec(islpy);
-
-        // REPL forever via jqconsole prompt.
-        return vm.repl(function(ps1) {
-          jqconsole.SetPromptLabel(ps1);
-          return new Promise(function(resolve, reject) {
-            jqconsole.Prompt(true, function (input) {
-              resolve(input);
-            });
-          });
+	  $.ajax({
+            url: 'isl.txt',
+	    type: 'get',
+	    async: false,
+	    success: function(html) {
+	        islpy = String(html);
+            }
+	  });
+	  vm.exec(islpy).then(pt_appendInput, pt_appendInput);
         });
-      }).then(null, function(err) {
-        //jqconsole.Reset();
-        jqconsole.Write('ERROR: ' + err);
       });
-    });
   </script>
-  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-66123869-3']);
-  _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
 </body>
 
 </html>
