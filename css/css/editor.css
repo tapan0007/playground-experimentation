@@ -1,0 +1,50 @@
+#editor, #actions, #loading, .CodeMirror {
+    display:none;
+}
+.CodeMirror {
+    border-top: 1px solid black; border-bottom: 1px solid black;
+}
+#console {
+    position: absolute;
+    width: 90%;
+}
+.float_right {
+    float:right;
+}
+
+.CodeMirror, #console {
+    transition: height 1s ease;
+    transition-delay: 0.2s; /* fix for hit the run button */
+}
+/* high / low will be added/removed by JS */
+.CodeMirror.high, #console.high { height: 60%; }
+.CodeMirror.low, #console.low { height: 20%; }
+
+			/* tell the SVG path to be a thin blue line without any area fill */
+			path {
+				stroke: steelblue;
+				stroke-width: 1;
+				fill: none;
+			}
+			
+			.axis {
+			  shape-rendering: crispEdges;
+			}
+
+			.x.axis line {
+			  stroke: lightgrey;
+			}
+
+			.x.axis .minor {
+			  stroke-opacity: .5;
+			}
+
+			.x.axis path {
+			  display: none;
+			}
+
+			.y.axis line, .y.axis path {
+			  fill: none;
+			  stroke: #000;
+			}
+

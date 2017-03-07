@@ -1,10 +1,13 @@
 <html lang='en'>
+
 <head>
   <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Polly Labs Playground - Console</title>
+
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
   <link href='https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css' rel='stylesheet' type='text/css'>
@@ -14,6 +17,7 @@
   <link href='css/pypyjs.css' rel='stylesheet' type='text/css'>
   <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 </head>
+
 <body>
   <div class="navbar navbar-inverse">
     <div class="container">
@@ -37,9 +41,13 @@
       </div>
     </div>
   </div>
+
   <div class='container'>
+
     <p>&nbsp;</p>
+
     <noscript><h3>Please enable JavaScript for using PyPy.js</h3></noscript>
+
     <div id="pt-ui">
       <div id="pt-wait">Please wait until PyPy.js is loaded.  It is huge, so it may take a while...</div>
 <!--
@@ -49,6 +57,7 @@
       </div>
 -->
     </div>
+
   </div>
   <div class='container' style="height: 320px">
   </div>
@@ -77,17 +86,20 @@ documentation of the AST generation functionality.
      <a href="http://www.grosser.es/#pub-polyhedral-AST-generation">Details</a>
   </p>
   </div>
+
   <script src="pypyjs-release/lib/Promise.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="pypyjs-release/lib/FunctionPromise.js" type="text/javascript" charset="utf-8"></script>
   <script src="pypyjs-release/lib/pypy.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/jquery-migrate-1.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+
   <script>
     function pt_appendInput() {
       let ui = document.getElementById("pt-ui");
       let currentInputElement = document.getElementById("pt-input");
       let newInputElement = document.createElement("input")
       let runButtonElement = document.getElementById("pt-run-button");
+
       if (currentInputElement) {
         currentInputElement.removeAttribute("id");
         currentInputElement.readOnly = true;
@@ -98,6 +110,7 @@ documentation of the AST generation functionality.
         runButtonElement.setAttribute("onclick", "pt_processInput()");
         runButtonElement.innerHTML = "Run!";
       }
+
       newInputElement.setAttribute("type", "text");
       newInputElement.setAttribute("id", "pt-input");
       newInputElement.style.width = "80%";
@@ -105,17 +118,34 @@ documentation of the AST generation functionality.
       ui.appendChild(runButtonElement);
       newInputElement.focus();
     }
+
+
     function pt_appendOutput(code) {
       let ui = document.getElementById("pt-ui");
       let outputElement = document.createElement("div");
+
       outputElement.innerHTML = code;
       ui.appendChild(outputElement);
     }
+
     function pt_processInput() {
       let currentInputElement = document.getElementById("pt-input");
-      vm.exec(currentInputElement.value).then(pt_appendInput);
-    }
+      $.ajax({
+             type: 'get',
+             url: 'autocomplete.py',
+             data: {param: 'Tapan'}, //passing some input here
+             dataType: "text",
+             success: function(response){
+                output = String(response);
+                //alert(output);
+                //vm.exec(output).then(pt_appendInput, pt_appendInput);
+              //  alert(vm.exec(output))
+             }
+     });
+              vm.exec(currentInputElement.value).then(pt_appendInput, pt_appendInput);
+          }
   </script>
+
   <script>
     $(function () {
         window.vm = new PyPyJS();
@@ -129,6 +159,7 @@ documentation of the AST generation functionality.
           let ui = document.getElementById("pt-ui");
           let waitElement = document.getElementById("pt-wait");
           ui.removeChild(waitElement);
+
 	  $.ajax({
             url: 'isl.txt',
 	    type: 'get',
@@ -141,6 +172,9 @@ documentation of the AST generation functionality.
         });
       });
   </script>
+
   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+  $(function () {
 </body>
+
 </html>
